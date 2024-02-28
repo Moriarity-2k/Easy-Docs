@@ -90,10 +90,11 @@ export const authenticate = catchAsync(
 		const { jwt: jwt_token } = req.cookies;
 
 		if (!jwt_token) {
-			return res.json(401).json({
+			res.json(401).json({
 				status: "Please Login",
 				message: "You have to login to perform this action !",
 			});
+            return;
 		}
 
 		const jwtString = jwt.verify(jwt_token, process.env.SECRET_STRING!);

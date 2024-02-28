@@ -9,7 +9,7 @@ export interface IUser extends Document {
 	name?: string;
 	active: boolean;
 	// sharedDocuments: { documentId: Schema.Types.ObjectId; role: SCOPE }[];
-	sharedDocuments: { documentId: number; role: SCOPE }[];
+	sharedDocuments: { documentId: string; role: SCOPE }[];
 	// sharedDocuments: {}[];
 	_id?: Schema.Types.ObjectId;
 }

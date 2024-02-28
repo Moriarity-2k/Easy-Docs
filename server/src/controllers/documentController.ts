@@ -28,9 +28,46 @@ export const createDocument = catchAsync(
 	}
 );
 
+export const getAccess = catchAsync(
+	async (req: UserOnRequest, res: Response, next: NextFunction) => {
+		const id = req.params.id;
+
+		const doc_ = await document.findById(id);
+
+		if (!doc_) {
+			return res.status(404).json({
+				status: "Not Found",
+				message: 11,
+			});
+		}
+		if (req.user_?.id === String(doc_.adminId)) {
+			return res.status(200).json({
+				status: "success",
+				message: SCOPE.ADMIN,
+			});
+		}
+
+		const user_ = req.user_;
+
+		for (const x of user_?.sharedDocuments!) {
+			if (x.documentId === id) {
+				return res.status(200).json({
+					status: "success",
+					message: x.role,
+				});
+			}
+		}
+
+		res.status(200).json({
+			status: "fail",
+			message: 10,
+		});
+	}
+);
+
 export const updateDocument = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
-        console.log({query_string : req.params})
+		console.log({ query_string: req.params });
 		res.status(200).json({
 			status: "success",
 			message: "data received",

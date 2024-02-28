@@ -3,24 +3,24 @@ import { useTheme } from "@/context/useTheme";
 import { FaRegStar } from "react-icons/fa";
 
 import LOGO from "@/components/icons/Docs.svg";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "@/constants";
+import toast from "react-hot-toast";
 
 export default function Document_Editor() {
 	const { slug } = useParams();
 	const [searchParams] = useSearchParams();
+	const { currentTheme } = useTheme();
+	const navigate = useNavigate();
+	const [editorContent, setEditorContent] = useState<string | null>(null);
 
 	const title = searchParams.get("title");
 	const id = searchParams.get("id");
-
-	const { currentTheme } = useTheme();
 	const theme = currentTheme && currentTheme();
 
 	const height_screen = window.innerHeight;
-
-	const [editorContent, setEditorContent] = useState<string | null>(null);
 
 	useEffect(() => {
 		const timer = setTimeout(async () => {
@@ -41,6 +41,42 @@ export default function Document_Editor() {
 
 		return () => clearTimeout(timer);
 	}, [editorContent, id]);
+
+	const [editorDisble, setEditorDisable] = useState<boolean>(true);
+
+	useEffect(() => {
+		async function getAccess() {
+			console.log("IN GET ACCESSS : ");
+			const x = await axios(`${base_url}/document/${id}`, {
+				method: "GET",
+				withCredentials: true,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			console.log(x.data.message);
+
+			if (x.data.message === 10) {
+				/**
+				 * Instead of navigating back ask access for admin
+				 */
+				navigate("/");
+				toast.error("You cannot access this document");
+			}
+
+			if (x.data.message === 11) {
+				navigate("/");
+				toast.error("Document doesn't exist");
+			}
+
+			if (x.data.message === 0 || x.data.message === 1) {
+				setEditorDisable(false);
+			}
+		}
+
+		getAccess();
+	}, [id, navigate]);
 
 	return (
 		<div className="bg-light-800">
@@ -66,6 +102,7 @@ export default function Document_Editor() {
 						onEditorChange={(new_value) => {
 							setEditorContent(() => new_value);
 						}}
+						disabled={editorDisble}
 						initialValue=""
 						init={{
 							height: 0.9 * height_screen,
@@ -102,7 +139,7 @@ export default function Document_Editor() {
 								help: { title: "Help", items: "help" },
 							},
 							plugins:
-								"print preview fullpage paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount spellchecker imagetools textpattern noneditable help charmap quickbars emoticons",
+								"preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons",
 							// note: plugins : minimal
 							// plugins: [
 							// 	"advlist",

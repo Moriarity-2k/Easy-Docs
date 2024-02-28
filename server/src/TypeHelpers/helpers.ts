@@ -4,7 +4,6 @@ import { IUser } from "../models/user.model";
 export enum SCOPE {
 	ADMIN,
 	ALL,
-	EDIT,
 	VIEW,
 }
 

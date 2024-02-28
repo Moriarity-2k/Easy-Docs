@@ -20,13 +20,12 @@ process.on("uncaughtException", (err) => {
 // 		origin: "http://localhost:5173",
 // 	},
 // });
-// 
+//
 // ioServer.listen(8000);
-// 
+//
 // ioServer.on("connection", (socket) => {
 // 	console.log("SOCKET ", socket.id);
 // });
-
 
 const DB = process.env.DATABASE!;
 mongoose
