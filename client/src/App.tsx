@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { ThemeProvider } from "./context/useTheme";
 import Home from "./pages/Home";
+import Document_Editor from "./pages/Document";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
 		path: "/login",
 		element: <Login />,
 	},
+    {
+        path : '/document/:slug',
+        element : <Document_Editor />
+    }
 ]);
 
 function App() {

@@ -14,16 +14,28 @@ export const createDocument = catchAsync(
 			// access: [{ userId: body.userId, scope: SCOPE.ADMIN }],
 		});
 
+		console.log({ doc });
+
 		res.status(201).json({
 			status: "success",
 			message: "Document creation successful",
-			doc,
+			file: {
+				title: doc.title,
+				slug: doc.slug,
+				id: doc.id,
+			},
 		});
 	}
 );
 
 export const updateDocument = catchAsync(
-	async (req: UserOnRequest, res: Response, next: NextFunction) => {}
+	async (req: UserOnRequest, res: Response, next: NextFunction) => {
+        console.log({query_string : req.params})
+		res.status(200).json({
+			status: "success",
+			message: "data received",
+		});
+	}
 );
 
 /**

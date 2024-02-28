@@ -21,7 +21,7 @@ export const formSchema = z.object({
 });
 
 async function onSubmit(values: z.infer<typeof formSchema>) {
-	const logInUser = await axios(`${base_url}/signup`, {
+	const logInUser = await axios(`${base_url}/login`, {
 		method: "POST",
 		withCredentials: true,
 		headers: {
@@ -57,11 +57,11 @@ export default function Register() {
 		mutationKey: ["register"],
 		mutationFn: onSubmit,
 		onError: (err) => {
-			toast.error(`unable to create user. ${err.message}`);
+			toast.error(`Unable to signin. ${err.message}`);
 		},
 		onSuccess: () => {
             navigate('/');
-			toast.success("Account successfully created !!!");
+			toast.success("Sign in successfull !!!");
 		},
 	});
 

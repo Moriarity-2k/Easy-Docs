@@ -13,6 +13,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
@@ -45,26 +46,27 @@ const formSchema = z.object({
 });
 
 async function onSubmit(values: z.infer<typeof formSchema>) {
-	// const created_user = await axios(`${base_url}/createNewDocument`, {
-	// 	method: "POST",
-	// 	withCredentials: true,
-	// 	headers: {
-	// 		"Content-Type": "application/json",
-	// 	},
-	// 	data: {
-	// 		title: values.title,
-    //         public : (values.public === 'public' ? true : false)
-	// 	},
-	// });
-	// return created_user;
-
-	console.log(values);
-
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			resolve({ success: "from the frontend promise" });
-		}, 5000);
+	const created_document = await axios(`${base_url}/createNewDocument`, {
+		method: "POST",
+		withCredentials: true,
+		headers: {
+			"Content-Type": "application/json",
+		},
+		data: {
+			title: values.title,
+			public: values.public === "public",
+		},
 	});
+	console.log(created_document);
+	return created_document;
+
+	// 	console.log(values);
+	//
+	// 	return new Promise((resolve) => {
+	// 		setTimeout(() => {
+	// 			resolve({ success: "from the frontend promise" });
+	// 		}, 5000);
+	// 	});
 }
 
 function CreateDocument() {
@@ -80,12 +82,18 @@ function CreateDocument() {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["create-document"],
 		mutationFn: onSubmit,
-		onError: (err) => {
-			toast.error(`unable to create document. ${err.message}`);
+		onError: () => {
+			toast.error(
+				`Failed to create the file. Please Try again Later !!!`
+			);
 		},
-		onSuccess: () => {
-			toast.success("Account successfully created !!!");
-			navigate("/");
+		onSuccess: (data) => {
+			toast.success("File creation successfull !!!");
+			const doc_data = data.data.file;
+			navigate(
+				`/document/${doc_data.slug}?id=${doc_data.id}&title=${doc_data.title}`
+			);
+			// navigate(`/document/${data.data}`);
 		},
 	});
 
@@ -113,7 +121,7 @@ function CreateDocument() {
 						render={({ field }) => (
 							<FormItem className="space-y-3">
 								<FormLabel className="text-dark500_light700 tracking-wider capitalize">
-									Visibility{" "}
+									Visibility
 								</FormLabel>
 								<FormControl className="">
 									<RadioGroup

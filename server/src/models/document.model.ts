@@ -37,6 +37,6 @@ documentSchema.pre("save", function (this, next) {
 	next();
 });
 
-const document = model<IDocument>("document", documentSchema);
+const document =  model<IDocument>("document", documentSchema);
 
 export default document;

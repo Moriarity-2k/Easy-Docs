@@ -3,6 +3,7 @@ import { authenticate } from "../controllers/authController";
 import {
 	createDocument,
 	deleteDocument,
+	updateDocument,
 } from "../controllers/documentController";
 import user from "../models/user.model";
 import { SCOPE } from "../TypeHelpers/helpers";
@@ -17,6 +18,9 @@ const router = Router();
 
 router.route("/createNewDocument").post(authenticate, createDocument);
 
-router.route("/document/:id").delete(authenticate, deleteDocument);
+router
+	.route("/document/:id")
+	.post(authenticate, updateDocument)
+	.delete(authenticate, deleteDocument);
 
 export default router;
