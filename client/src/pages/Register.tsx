@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { REGISTER_VALUES, base_url } from "@/constants";
 import toast from "react-hot-toast";
-import Spinner from "@/components/Spinner";
+import {ClipSpinner} from "@/components/Spinner";
 import FormElement from "@/components/FormElement";
 import { useNavigate } from "react-router-dom";
 
@@ -83,8 +83,9 @@ export default function Register() {
 					<div className="text-center uppercase h2-bold tracking-wider text-docs-blue dark:text-light-400">
 						Sign Up
 					</div>
-					{REGISTER_VALUES.map((field) => (
+					{REGISTER_VALUES.map((field, i) => (
 						<FormElement
+							key={i}
 							fieldName={field.field}
 							placeHoldText={field.placeholder}
 							form={form}
@@ -96,7 +97,7 @@ export default function Register() {
 						className="bg-docs-blue hover:bg-docs-blue-hover w-full body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest"
 					>
 						{isPending ? (
-							<Spinner sz={16} color="bg-primary-500" />
+							<ClipSpinner sz={16} color="bg-primary-500" />
 						) : (
 							"sign up"
 						)}

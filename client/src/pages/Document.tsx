@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "@/constants";
 import toast from "react-hot-toast";
+import { SpiralSpinner } from "@/components/Spinner";
 
 export default function Document_Editor() {
 	const { slug } = useParams();
@@ -15,6 +16,7 @@ export default function Document_Editor() {
 	const { currentTheme } = useTheme();
 	const navigate = useNavigate();
 	const [editorContent, setEditorContent] = useState<string | null>(null);
+	const [editorLoading, setEditorLoading] = useState<boolean>(true);
 
 	const title = searchParams.get("title");
 	const id = searchParams.get("id");
@@ -59,7 +61,7 @@ export default function Document_Editor() {
 
 			if (x.data.message === 10) {
 				/**
-				 * Instead of navigating back ask access for admin
+				 * TODO: Instead of navigating back ask access for admin
 				 */
 				navigate("/");
 				toast.error("You cannot access this document");
@@ -95,10 +97,18 @@ export default function Document_Editor() {
 					</div>
 				</div>
 				<div className="shadow-gray-300 shadow-lg space-y-4">
+					{editorLoading === true && (
+						<SpiralSpinner sz={30} color="bg-primary-500" />
+					)}
+
 					<Editor
 						apiKey={import.meta.env.VITE_TINY_EDITOR_APIKEY}
 						// onInit={(evt, editor) => (editorRef.current = editor)}
+						onInit={() => {
+							setEditorLoading(false);
+						}}
 						// onChange=
+
 						onEditorChange={(new_value) => {
 							setEditorContent(() => new_value);
 						}}

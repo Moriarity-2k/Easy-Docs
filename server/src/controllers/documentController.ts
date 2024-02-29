@@ -34,12 +34,17 @@ export const getAccess = catchAsync(
 
 		const doc_ = await document.findById(id);
 
+        console.log("GET ACCESS : ")
+
+		// No doc exist
 		if (!doc_) {
 			return res.status(404).json({
 				status: "Not Found",
 				message: 11,
 			});
 		}
+
+		// user === admin
 		if (req.user_?.id === String(doc_.adminId)) {
 			return res.status(200).json({
 				status: "success",
@@ -49,6 +54,7 @@ export const getAccess = catchAsync(
 
 		const user_ = req.user_;
 
+		// user has access to the doc through sharing
 		for (const x of user_?.sharedDocuments!) {
 			if (x.documentId === id) {
 				return res.status(200).json({

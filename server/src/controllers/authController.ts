@@ -89,14 +89,13 @@ export const authenticate = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
 		const { jwt: jwt_token } = req.cookies;
 
+        
 		if (!jwt_token) {
-			res.json(401).json({
-				status: "Please Login",
+            return res.status(401).json({
+                status: "Please Login",
 				message: "You have to login to perform this action !",
 			});
-            return;
 		}
-
 		const jwtString = jwt.verify(jwt_token, process.env.SECRET_STRING!);
 
 		const decoded = jwtDecode<Decode>(jwt_token);
@@ -112,7 +111,7 @@ export const authenticate = catchAsync(
 		const user_found = await user.findById(decoded.id);
 
 		if (!user_found) {
-			return res.json(404).json({
+			return res.status(404).json({
 				status: "error",
 				message: "User does not exist on DB",
 			});

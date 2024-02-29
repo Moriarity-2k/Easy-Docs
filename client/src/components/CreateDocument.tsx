@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { base_url } from "@/constants";
-import Spinner from "@/components/Spinner";
+import { ClipSpinner } from "@/components/Spinner";
 import FormElement from "@/components/FormElement";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
@@ -159,7 +159,7 @@ function CreateDocument() {
 						className="bg-docs-blue hover:bg-docs-blue-hover w-full body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest"
 					>
 						{isPending ? (
-							<Spinner sz={16} color="bg-primary-500" />
+							<ClipSpinner sz={16} color="bg-primary-500" />
 						) : (
 							"create document"
 						)}

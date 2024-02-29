@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { LOGIN_VALUES, base_url } from "@/constants";
 import toast from "react-hot-toast";
-import Spinner from "@/components/Spinner";
+import {ClipSpinner} from "@/components/Spinner";
 import FormElement from "@/components/FormElement";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +44,7 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
 }
 
 export default function Register() {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -60,11 +60,10 @@ export default function Register() {
 			toast.error(`Unable to signin. ${err.message}`);
 		},
 		onSuccess: () => {
-            navigate('/');
+			navigate("/");
 			toast.success("Sign in successfull !!!");
 		},
 	});
-
 
 	return (
 		<div className="h-screen flex-center">
@@ -78,8 +77,9 @@ export default function Register() {
 					<div className="text-center uppercase h2-bold tracking-wider text-docs-blue dark:text-light-400">
 						Sign In
 					</div>
-					{LOGIN_VALUES.map((field) => (
+					{LOGIN_VALUES.map((field, i) => (
 						<FormElement
+							key={i}
 							fieldName={field.field}
 							placeHoldText={field.placeholder}
 							form={form}
@@ -91,7 +91,7 @@ export default function Register() {
 						className="bg-docs-blue hover:bg-docs-blue-hover w-full body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest"
 					>
 						{isPending ? (
-							<Spinner sz={16} color="bg-primary-500" />
+							<ClipSpinner sz={16} color="bg-primary-500" />
 						) : (
 							"sign in"
 						)}
