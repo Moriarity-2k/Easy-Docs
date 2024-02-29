@@ -82,7 +82,7 @@ export default function Document_Editor() {
 
 	return (
 		<div className="bg-light-800">
-			<div className="space-y-6 lg:w-[80%] sm:w-[85%] max-sm:w-[96%] mx-auto pt-8">
+			<div className="space-y-6 lg:w-[90%] sm:w-[85%] max-sm:w-[96%] mx-auto pt-4">
 				<div className="mx-auto">
 					<div className="lg:h2-bold sm:h3-bold tracking-normal uppercase flex items-center space-x-10">
 						<div className="flex items-center space-x-2">
@@ -96,11 +96,10 @@ export default function Document_Editor() {
 						</span>
 					</div>
 				</div>
+				{editorLoading === true && (
+					<SpiralSpinner sz={90} color="#1a73e8" />
+				)}
 				<div className="shadow-gray-300 shadow-lg space-y-4">
-					{editorLoading === true && (
-						<SpiralSpinner sz={30} color="bg-primary-500" />
-					)}
-
 					<Editor
 						apiKey={import.meta.env.VITE_TINY_EDITOR_APIKEY}
 						// onInit={(evt, editor) => (editorRef.current = editor)}

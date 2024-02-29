@@ -2,56 +2,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import axios from "axios";
-
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
-import { REGISTER_VALUES, base_url } from "@/constants";
+import { REGISTER_VALUES, formSchemaRegister } from "@/constants";
 import toast from "react-hot-toast";
-import {ClipSpinner} from "@/components/Spinner";
+import { ClipSpinner } from "@/components/Spinner";
 import FormElement from "@/components/FormElement";
 import { useNavigate } from "react-router-dom";
-
-export const formSchema = z.object({
-	username: z.string().min(2, {
-		message: "Username must be at least 2 characters.",
-	}),
-	email: z.string().email({ message: "Please provide a valid email" }),
-	password: z
-		.string()
-		.min(4, { message: "Password must be at least 4 characters." }),
-});
-
-async function onSubmit(values: z.infer<typeof formSchema>) {
-	const created_user = await axios(`${base_url}/signup`, {
-		method: "POST",
-		withCredentials: true,
-		headers: {
-			"Content-Type": "application/json",
-		},
-		data: {
-			name: values.username,
-			password: values.password,
-			email: values.email,
-		},
-	});
-	return created_user;
-
-	// 	console.log(values);
-	//
-	// 	return new Promise((resolve) => {
-	// 		setTimeout(() => {
-	// 			resolve({ success: "from the frontend promise" });
-	// 		}, 5000);
-	// 	});
-}
+import { useAuth } from "@/context/useAuth";
 
 export default function Register() {
 	const navigate = useNavigate();
+	const { onSubmitRegister } = useAuth();
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof formSchemaRegister>>({
+		resolver: zodResolver(formSchemaRegister),
 		defaultValues: {
 			username: "username",
 			email: "email@gmail.com",
@@ -61,7 +27,7 @@ export default function Register() {
 
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["register"],
-		mutationFn: onSubmit,
+		mutationFn: onSubmitRegister,
 		onError: (err) => {
 			toast.error(`unable to create account. ${err.message}`);
 		},
@@ -72,13 +38,14 @@ export default function Register() {
 	});
 
 	return (
-		<div className="h-screen flex-center">
+		<div className="flex-center mt-32">
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(
-						(values: z.infer<typeof formSchema>) => mutate(values)
+						(values: z.infer<typeof formSchemaRegister>) =>
+							mutate(values)
 					)}
-					className="space-y-4 border-2 light-border xl:w-1/3 lg:w-1/2 md:w-2/3 sm:w-full max-sm:w-full mx-auto p-[2rem] background-light800_dark400"
+					className="space-y-4 border light-border-2  xl:w-1/3 lg:w-1/2 md:w-2/3 sm:w-full max-sm:w-full mx-auto p-[2rem] background-light800_dark400 shadow-light-300 dark:shadow-none"
 				>
 					<div className="text-center uppercase h2-bold tracking-wider text-docs-blue dark:text-light-400">
 						Sign Up

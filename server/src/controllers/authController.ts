@@ -51,6 +51,10 @@ export const Login = catchAsync(
 			status: "success",
 			message: "Log In successfull",
 			// token,
+			user: {
+				name: user_db.name,
+				email: user_db.email,
+			},
 		});
 	}
 );
@@ -75,6 +79,10 @@ export const signUp = catchAsync(
 			status: "success",
 			message: "Sign Up successfull",
 			// token,
+			user: {
+				name: created_user.name,
+				email: created_user.email,
+			},
 		});
 	}
 );
@@ -89,10 +97,9 @@ export const authenticate = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
 		const { jwt: jwt_token } = req.cookies;
 
-        
 		if (!jwt_token) {
-            return res.status(401).json({
-                status: "Please Login",
+			return res.status(401).json({
+				status: "Please Login",
 				message: "You have to login to perform this action !",
 			});
 		}

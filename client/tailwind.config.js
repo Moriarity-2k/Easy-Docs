@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+
+
 // eslint-disable-next-line
 module.exports = {
 	darkMode: ["class"],
@@ -11,9 +13,9 @@ module.exports = {
 	],
 	prefix: "",
 	theme: {
-		fontFamily: {
-			poppins: ["poppins", "mono"],
-		},
+		// fontFamily: {
+		//     poppins: ["poppins", "mono"],
+		// },
 		container: {
 			center: true,
 			padding: "2rem",
@@ -22,6 +24,10 @@ module.exports = {
 			},
 		},
 		extend: {
+			fontFamily: {
+				poppins: ["poppins", "mono"],
+				kode: ["kode-mono"],
+			},
 			colors: {
 				primary: {
 					//   500: "#FF7000",
@@ -45,7 +51,7 @@ module.exports = {
 				},
 				"accent-blue": "#1DA1F2",
 				"docs-blue": "#1a73e8",
-                "docs-blue-hover": "#135ec0",
+				"docs-blue-hover": "#135ec0",
 			},
 			keyframes: {
 				"accordion-down": {

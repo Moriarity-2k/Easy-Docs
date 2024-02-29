@@ -1,4 +1,5 @@
 @import url(./theme.css);
+/* @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap') */
 
 @tailwind base;
 @tailwind components;
@@ -25,7 +26,7 @@
     }
     .btn-tertiary {
         @apply bg-light-700 dark:bg-dark-300 !important;
-    }
+    }    
     .primary-gradient {
         background: linear-gradient(129deg, #3530d1 0%, #3530d1a6 100%);
         /* background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%); */

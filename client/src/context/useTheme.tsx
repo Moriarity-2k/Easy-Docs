@@ -50,6 +50,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 			setTheme("dark");
 		}
 	}, []);
+
 	return (
 		<ThemeContext.Provider value={{ currentTheme, changeTheme }}>
 			{children}
@@ -60,6 +61,5 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 // eslint-disable-next-line
 export function useTheme() {
 	const values = useContext(ThemeContext);
-    console.log(values?.currentTheme())
 	return { ...values };
 }

@@ -25,12 +25,23 @@ const io = new Server(http_server, {
 });
 
 io.on("connection", (socket) => {
-	console.log(socket);
+	// console.log(socket);
+	// io.("join-room", (...args) => {
+	// 	console.log(args);
+	// 	console.log("join-room");
+	// });
+	socket.on("join-room", (...args) => {
+		console.log(args);
+		io.emit("some-message", "added : ");
+	});
 
+    // socket.broadcast.emit()
 });
 
-http_server.listen(4000, () => {
-	console.log("http server");
+const PORT = process.env.PORT || 3000;
+
+http_server.listen(PORT, () => {
+	console.log("http server on : ", PORT);
 });
 
 // const ioServer = new Server({
@@ -55,8 +66,7 @@ mongoose
 		console.log("DB ERROR : ", reason);
 	});
 
-// const PORT = process.env.PORT || 3000;
-// 
+//
 // const server = app.listen(PORT, () => {
 // 	console.log("Server connected : ", PORT);
 // });
