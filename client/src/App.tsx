@@ -8,7 +8,6 @@ import Login from "./pages/Login";
 import { ThemeProvider } from "./context/useTheme";
 import Home from "./pages/Layout_Page";
 import Document_Editor from "./pages/Document";
-import Navbar from "./components/Navbar";
 import AuthProvider from "./context/useAuth";
 
 const queryClient = new QueryClient();
@@ -19,31 +18,19 @@ const router = createBrowserRouter([
 		element: <Home />,
 		children: [
 			{
-				path: "/register",
-				element: <Register />,
-			},
-			{
-				path: "/login",
-				element: <Login />,
-			},
-			{
 				path: "/document/:slug",
 				element: <Document_Editor />,
 			},
 		],
 	},
-	// {
-	// 	path: "/register",
-	// 	element: <Register />,
-	// },
-	// {
-	// 	path: "/login",
-	// 	element: <Login />,
-	// },
-	// {
-	//     path : '/document/:slug',
-	//     element : <Document_Editor />
-	// }
+	{
+		path: "/register",
+		element: <Register />,
+	},
+	{
+		path: "/login",
+		element: <Login />,
+	},
 ]);
 
 function App() {

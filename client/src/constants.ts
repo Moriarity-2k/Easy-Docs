@@ -34,3 +34,8 @@ export interface ILoggedUser {
 	name: string;
 	email: string;
 }
+
+export interface IEditorDisable {
+	access: boolean;
+	message: string;
+}

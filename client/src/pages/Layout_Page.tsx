@@ -1,17 +1,13 @@
-import CreateDocument from "@/components/CreateDocument";
 import Navbar from "@/components/Navbar";
-import { socket_url } from "@/constants";
-import { useTheme } from "@/context/useTheme";
-import axios from "axios";
-import { useEffect } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+// import { socket_url } from "@/constants";
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+// import toast from "react-hot-toast";
+import { Outlet } from "react-router-dom";
 
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 export default function Home() {
-	const { currentTheme, changeTheme } = useTheme();
-	const theme = currentTheme && currentTheme();
-
 	// 	useEffect(() => {
 	// 		const socket = io(`${socket_url}`);
 	//
@@ -19,13 +15,16 @@ export default function Home() {
 	// 			console.log("Connected : ");
 	// 		});
 	//
-	// 		if (socket) {
-	// 			console.log("hello socket : ");
-	// 			socket.emit("join-room", "id-1234");
-	// 		}
+	// 		socket.emit("join-room", "id-1234", x);
+	//
 	// 		socket.on("some-message", (res) => {
 	// 			console.log(res);
 	// 		});
+	// 		socket.on("someone-joined", (res) => {
+	// 			console.log(res);
+	// 		});
+	//
+	// 		socket.emit("send-to-rooms", "id-1234", toast("hello"));
 	// 	}, []);
 
 	return (
@@ -33,6 +32,7 @@ export default function Home() {
 		<div className="">
 			<Navbar />
 			<Outlet />
+
 			{/* <div className="flex gap-6">
 				<div className="h-20 w-20 bg-dark-100">hello</div>
 				<div className="h-20 w-20 bg-dark-200">hello</div>
@@ -77,4 +77,5 @@ io.on(connection) , io.emit() => for all , socket.broadcast.emit() => all except
 
 Every user is in a room by himself with his socket id
 socket.to(room).emit();
+socket.join(room)
 */

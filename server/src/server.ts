@@ -24,18 +24,29 @@ const io = new Server(http_server, {
 	},
 });
 
+// const map = new Map<[string, string], boolean>();
+
 io.on("connection", (socket) => {
-	// console.log(socket);
-	// io.("join-room", (...args) => {
-	// 	console.log(args);
-	// 	console.log("join-room");
-	// });
 	socket.on("join-room", (...args) => {
 		console.log(args);
-		io.emit("some-message", "added : ");
+		socket.join(args[0]);
+		socket.broadcast.to(args[0]).emit("someone-joined", args[1]);
 	});
 
-    // socket.broadcast.emit()
+	socket.on("send-to-rooms", (...args) => {
+		console.log({ CONTENT: args[1], ROOM: args[0] });
+		socket.broadcast
+			.to(args[0])
+			.emit("change-in-content-from-server", args[1]);
+	});
+
+	socket.on("disconnect", () => {
+		console.log("Disconnected");
+		socket.disconnect();
+	});
+
+	console.log({ size: io.sockets.sockets.size });
+	// for (const x of io.sockets.sockets) {
 });
 
 const PORT = process.env.PORT || 3000;

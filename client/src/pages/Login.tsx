@@ -13,6 +13,7 @@ import { ClipSpinner } from "@/components/Spinner";
 import FormElement from "@/components/FormElement";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
+import { FaArrowLeft } from "react-icons/fa";
 
 async function onSubmit(values: z.infer<typeof formSchemaLogin>) {
 	const logInUser = await axios(`${base_url}/login`, {
@@ -63,7 +64,7 @@ export default function Register() {
 	});
 
 	return (
-		<div className="flex-center mt-32">
+		<div className="flex-center h-screen">
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(
@@ -104,6 +105,18 @@ export default function Register() {
 							className="bg-docs-blue hover:bg-docs-blue-hover w-full body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest subtle-semibold"
 						>
 							sign up
+						</Button>
+					</div>
+					<div className="flex items-center gap-3">
+						<div className="text-dark400_light500 small-semibold opacity-60 lowercase">
+							Back
+						</div>
+						<Button
+							type="button"
+							onClick={() => navigate("/")}
+							className="bg-light-400 hover:bg-light-500 w-max body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest subtle-semibold"
+						>
+							<FaArrowLeft />
 						</Button>
 					</div>
 				</form>

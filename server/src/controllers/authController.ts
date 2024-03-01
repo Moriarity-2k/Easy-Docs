@@ -8,7 +8,7 @@ import { UserOnRequest } from "../TypeHelpers/helpers";
 
 const jwtSignInToken = function (id: string) {
 	const token = jwt.sign({ id }, process.env.SECRET_STRING!, {
-		expiresIn: 24 * 60 * 60,
+		expiresIn: '24d',
 	});
 
 	return token;
@@ -44,7 +44,7 @@ export const Login = catchAsync(
 		const token = jwtSignInToken(user_db._id!.toString());
 
 		res.cookie("jwt", token, {
-			maxAge: 7 * 24 * 60 * 60,
+			maxAge: 7 * 24 * 60 * 60 * 1000,
 		});
 
 		res.status(200).json({
@@ -72,7 +72,7 @@ export const signUp = catchAsync(
 		const token = jwtSignInToken(created_user._id!.toString());
 
 		res.cookie("jwt", token, {
-			maxAge: 7 * 24 * 60 * 60 * 1000,
+			maxAge: 7 * 86400,
 		});
 
 		res.status(200).json({

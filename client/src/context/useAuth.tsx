@@ -17,13 +17,13 @@ import { z } from "zod";
 interface IAuthContext {
 	onSubmitLogin: (values: z.infer<typeof formSchemaLogin>) => any;
 	onSubmitRegister: (values: z.infer<typeof formSchemaRegister>) => any;
-	loggedInUser: ILoggedUser | object;
+	loggedInUser: ILoggedUser | any;
 }
 
 const AuthContext = createContext<IAuthContext | null>(null);
 
 function AuthProvider({ children }: { children: ReactNode }) {
-	const [loggedInUser, setLoggedInUser] = useState<ILoggedUser | object>({});
+	const [loggedInUser, setLoggedInUser] = useState<ILoggedUser | any>({});
 
 	async function onSubmitLogin(values: z.infer<typeof formSchemaLogin>) {
 		const logInUser = await axios(`${base_url}/login`, {
@@ -41,7 +41,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			"user-details",
 			JSON.stringify(logInUser.data.user)
 		);
-
+		setLoggedInUser(logInUser.data.user);
 		return logInUser;
 
 		// console.log(values);
@@ -71,6 +71,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			"user-details",
 			JSON.stringify(created_user.data.user)
 		);
+		setLoggedInUser(created_user.data.user);
 		return created_user;
 
 		// 	console.log(values);
