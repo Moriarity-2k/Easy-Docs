@@ -89,14 +89,6 @@ export const signUp = catchAsync(
 
 export const logout = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
-		// console.log(req.body);
-
-		// const logged_in_user = (await user.create({
-		// 	email: req.body.email,
-		// 	password: req.body.password,
-		// 	name: req.body.name,
-		// })) as IUser;
-
 		res.clearCookie("jwt");
 
 		res.status(200).json({

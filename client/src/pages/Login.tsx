@@ -2,41 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import axios from "axios";
-
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
-import { LOGIN_VALUES, base_url, formSchemaLogin } from "@/constants";
+import { LOGIN_VALUES,  formSchemaLogin } from "@/constants";
 import toast from "react-hot-toast";
 import { ClipSpinner } from "@/components/Spinner";
 import FormElement from "@/components/FormElement";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
 import { FaArrowLeft } from "react-icons/fa";
-
-async function onSubmit(values: z.infer<typeof formSchemaLogin>) {
-	const logInUser = await axios(`${base_url}/login`, {
-		method: "POST",
-		withCredentials: true,
-		headers: {
-			"Content-Type": "application/json",
-		},
-		data: {
-			password: values.password,
-			email: values.email,
-		},
-	});
-	return logInUser;
-
-	// 	console.log(values);
-	//
-	// 	return new Promise((resolve) => {
-	// 		setTimeout(() => {
-	// 			resolve({ success: "from the frontend promise" });
-	// 		}, 5000);
-	// 	});
-}
 
 export default function Register() {
 	const navigate = useNavigate();
@@ -51,8 +26,7 @@ export default function Register() {
 	});
 
 	const { mutate, isPending } = useMutation({
-		mutationKey: ["register"],
-		// mutationFn: onSubmit,
+		mutationKey: ["login"],
 		mutationFn: onSubmitLogin,
 		onError: (err) => {
 			toast.error(`Unable to signin. ${err.message}`);

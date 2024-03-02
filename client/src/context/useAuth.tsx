@@ -3,6 +3,8 @@ import {
 	base_url,
 	formSchemaLogin,
 	formSchemaRegister,
+	formSchemaUpdatePassword,
+	formSchemaUpdateUserName,
 } from "@/constants";
 import axios from "axios";
 import {
@@ -15,9 +17,15 @@ import {
 import toast from "react-hot-toast";
 import { z } from "zod";
 
-interface IAuthContext {
+export interface IAuthContext {
 	onSubmitLogin: (values: z.infer<typeof formSchemaLogin>) => any;
 	onSubmitRegister: (values: z.infer<typeof formSchemaRegister>) => any;
+	onSubmitUserNameChange: (
+		values: z.infer<typeof formSchemaUpdateUserName>
+	) => any;
+	onSubmitPasswordChange: (
+		values: z.infer<typeof formSchemaUpdatePassword>
+	) => any;
 	loggedInUser: ILoggedUser | any;
 	Logout: () => void;
 }
@@ -44,6 +52,48 @@ function AuthProvider({ children }: { children: ReactNode }) {
 		} catch (err) {
 			toast.error(`Sorry , unable to process the request.`);
 		}
+	}
+
+	async function onSubmitUserNameChange(
+		values: z.infer<typeof formSchemaUpdateUserName>
+	) {
+		const userName = await axios(`${base_url}/user/updateUserName`, {
+			method: "POST",
+			withCredentials: true,
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: {
+				name: values.username,
+			},
+		});
+
+		const new_details = {
+			name: values.username,
+			email: loggedInUser.email,
+		};
+
+		localStorage.setItem("user-details", JSON.stringify(new_details));
+		setLoggedInUser(new_details);
+		return userName;
+	}
+
+	async function onSubmitPasswordChange(
+		values: z.infer<typeof formSchemaUpdatePassword>
+	) {
+		await axios(`${base_url}/user/updatePassword`, {
+			method: "POST",
+			withCredentials: true,
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: {
+				password: values.password,
+				new_pass: values["new password"],
+			},
+		});
+
+		return "";
 	}
 
 	async function onSubmitLogin(values: z.infer<typeof formSchemaLogin>) {
@@ -94,14 +144,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
 		);
 		setLoggedInUser(created_user.data.user);
 		return created_user;
-
-		// 	console.log(values);
-		//
-		// 	return new Promise((resolve) => {
-		// 		setTimeout(() => {
-		// 			resolve({ success: "from the frontend promise" });
-		// 		}, 5000);
-		// 	});
 	}
 
 	useEffect(() => {
@@ -114,7 +156,14 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
 	return (
 		<AuthContext.Provider
-			value={{ onSubmitLogin, onSubmitRegister, loggedInUser, Logout }}
+			value={{
+				onSubmitLogin,
+				onSubmitRegister,
+				loggedInUser,
+				Logout,
+				onSubmitUserNameChange,
+				onSubmitPasswordChange,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

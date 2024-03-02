@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 
 import CircularDoc from "./icons/cirular-document.svg";
-import account from "./icons/account.svg";
 import Theme from "./Theme";
 import { useAuth } from "@/context/useAuth";
 import AccountMenu from "./AccountMenu";

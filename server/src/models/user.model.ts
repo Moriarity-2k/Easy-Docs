@@ -56,6 +56,7 @@ const userScehma = new Schema<IUser>({
 userScehma.pre("save", async function (this, next) {
 	if (!this.isModified("password")) next();
 
+    console.log('hello')
 	this.password = await bcrypt.hash(this.password, 11);
 	// this.sharedDocuments = [];
 

@@ -48,3 +48,22 @@ export const CATEGORIES = [
 ];
 
 export const recentDays = 7 * 24 * 60 * 60 * 1000;
+
+export const formSchemaUpdateUserName = z.object({
+	username: z.string().min(2, {
+		message: "Username must be at least 2 characters.",
+	}),
+});
+
+export const formSchemaUpdatePassword = z.object({
+	password: z
+		.string()
+		.min(4, { message: "Password must be at least 4 characters." }),
+
+	"new password": z
+		.string()
+		.min(4, { message: "Password must be at least 4 characters." }),
+	"confirm password": z
+		.string()
+		.min(4, { message: "Password must be at least 4 characters." }),
+});
