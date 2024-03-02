@@ -233,17 +233,17 @@ export const grantPermission = catchAsync(
 		const emailId = req.body.email;
 		const docId = req.body.docId;
 
-		console.log(emailId, docId);
+		// console.log(emailId, docId);
 
 		const req_user_ = await user.findOne({ email: emailId })!;
 
 		req.user_!.AccessPermission = req.user_!.AccessPermission.filter(
 			(eachPerm) => {
-				console.log(
-					eachPerm.docId.toString() === docId,
-					eachPerm.userId,
-					req_user_?._id
-				);
+				// console.log(
+				// 	eachPerm.docId.toString() === docId,
+				// 	eachPerm.userId,
+				// 	req_user_?._id
+				// );
 				return !(
 					eachPerm.docId.toString() === docId &&
 					eachPerm.userId.toString() === req_user_?._id.toString()

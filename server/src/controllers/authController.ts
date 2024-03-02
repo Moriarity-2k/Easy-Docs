@@ -59,7 +59,7 @@ export const Login = catchAsync(
 
 export const signUp = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
-		console.log(req.body);
+		// console.log(req.body);
 
 		const created_user = (await user.create({
 			email: req.body.email,
@@ -114,7 +114,7 @@ export const authenticate = catchAsync(
 		const jwtString = jwt.verify(jwt_token, process.env.SECRET_STRING!);
 
 		const decoded = jwtDecode<Decode>(jwt_token);
-		console.log(decoded.exp > Date.now());
+		// console.log(decoded.exp > Date.now());
 
 		if (decoded.exp > Date.now()) {
 			return res.status(401).json({
@@ -132,7 +132,7 @@ export const authenticate = catchAsync(
 			});
 		}
 
-		console.log("Authenticated successfully");
+		// console.log("Authenticated successfully");
 
 		req.user_ = user_found as IUser;
 

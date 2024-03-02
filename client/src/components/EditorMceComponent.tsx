@@ -35,13 +35,13 @@ export default function EditorMceComponent({
 
 		socket.emit("join-room", id, loggedInUser.name);
 		socket.on("change-in-content-from-server", (res) => {
-			console.log({ res });
+			// console.log({ res });
 			setEditorContent(res);
 		});
 
 		socket.on("someone-joined", (res) => {
 			toast(`${res} joined the room`);
-			console.log(res);
+			// console.log(res);
 		});
 
 		return () => {

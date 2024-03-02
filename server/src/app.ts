@@ -66,7 +66,7 @@ app.use('*',
 		res: Response,
 		next: NextFunction
 	) => {
-		console.log(err);
+		// console.log(err);
 		res.status(404);
 	}
 );

@@ -61,7 +61,7 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
 			public: values.public === "public",
 		},
 	});
-	console.log(created_document);
+	// console.log(created_document);
 	return created_document;
 
 }

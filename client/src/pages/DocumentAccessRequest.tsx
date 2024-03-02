@@ -17,7 +17,7 @@ export default function DocumentAccessRequest() {
 				},
 				withCredentials: true,
 			});
-			console.log(noti.data.notifications);
+			// console.log(noti.data.notifications);
 			return noti.data.notifications;
 		},
 	});

@@ -21,7 +21,7 @@ const io = new Server(http_server, {
 
 io.on("connection", (socket) => {
 	socket.on("join-room", (...args) => {
-		console.log(args);
+		// console.log(args);
 		socket.join(args[0]);
 		socket.broadcast.to(args[0]).emit("someone-joined", args[1]);
 	});
@@ -33,11 +33,10 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("disconnect", () => {
-		console.log("Disconnected");
+		// console.log("Disconnected");
 		socket.disconnect();
 	});
 
-	console.log({ size: io.sockets.sockets.size });
 });
 
 const PORT = process.env.PORT || 3000;

@@ -30,7 +30,7 @@ export default function Navbar() {
 						type="button"
 						className="bg-inherit dark:bg-inherit dark:border dark:border-light-700 px-6 body-semibold  dark:hover:bg-dark-200 dark:hover:border-light-900 uppercase tracking-widest subtle-semibold text-docs-blue-hover  dark:text-light-500  hover:bg-docs-blue hover:text-light-800 max-sm:text-[10px]"
 						onClick={() => {
-							console.log(loggedInUser);
+							// console.log(loggedInUser);
 							if (
 								loggedInUser === undefined ||
 								!Object.keys(loggedInUser).includes("email")
