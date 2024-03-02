@@ -24,14 +24,12 @@ export default function DocumentAccessRequest() {
 	const navigate = useNavigate();
 	if (isError) {
 		toast.error(`${error.message} , please try again later`);
-		return navigate("/");
+		navigate("/");
 	}
 
 	if (isLoading) {
 		return <SpiralSpinner sz={90} color="#1a73e8" />;
 	}
-
-	console.log(data);
 
 	return (
 		<div className="lg:w-[80%] mx-auto custom-scrollbar max-lg:w-[95%] space-y-6 mt-12">

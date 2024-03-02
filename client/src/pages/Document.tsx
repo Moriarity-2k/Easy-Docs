@@ -2,25 +2,12 @@ import { FaRegStar } from "react-icons/fa";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { IEditorDisable, base_url } from "@/constants";
 import toast from "react-hot-toast";
 import EditorMceComponent from "@/components/EditorMceComponent";
-import { useAuth } from "@/context/useAuth";
 import { Button } from "@/components/ui/button";
 
-/**
- *
- * Edtior disable ;
- *
- * true -> only view or can't access , (server error)
- * false ->
- *
- * 10 -> can't acess , so ask
- * 11 -> doesn't exist (deleted probably)
- * 0 , 1 -> ok
- * 2 -> only view
- */
 
 export default function Document_Editor() {
 	// const { slug } = useParams();
@@ -35,30 +22,9 @@ export default function Document_Editor() {
 	const title = searchParams.get("title")!;
 	const id = searchParams.get("id")!;
 
-	// 	useEffect(() => {
-	// 		const timer = setTimeout(async () => {
-	// 			console.log("Request Sent");
-	// 			const updated_data = await axios(`${base_url}/document/${id}`, {
-	// 				method: "POST",
-	// 				data: {
-	// 					content: editorContent,
-	// 				},
-	// 				withCredentials: true,
-	// 				headers: {
-	// 					"Content-Type": "application/json",
-	// 				},
-	// 			});
-	// 			console.log(updated_data);
-	// 			return updated_data;
-	// 		}, 3000);
-	//
-	// 		return () => clearTimeout(timer);
-	// 	}, [editorContent, id]);
-
 	useEffect(() => {
 		async function getAccess() {
 			try {
-				// console.log("IN GET ACCESSS : ");
 				const x = await axios(`${base_url}/document/getAccess/${id}`, {
 					method: "GET",
 					withCredentials: true,
@@ -68,10 +34,6 @@ export default function Document_Editor() {
 				});
 
 				if (x.data.message === 10) {
-					/**
-					 * TODO: Instead of navigating back ask access for admin
-					 */
-
 					setEditorDisable({ access: true, message: "No Access" });
 					toast.error("You cannot access this document");
 				}
