@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Login, authenticate, signUp } from "../controllers/authController";
+import { Login, authenticate, logout, signUp } from "../controllers/authController";
 // import user from "../models/user.model";
 import { updatePassword } from "../controllers/userController";
 
@@ -7,6 +7,7 @@ const router = Router();
 
 router.route("/login").post(Login);
 router.route("/signup").post(signUp);
+router.route('/logout').post(authenticate , logout);
 
 router.route("/updatePassword").post(authenticate, updatePassword);
 

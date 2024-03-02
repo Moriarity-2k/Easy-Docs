@@ -12,18 +12,39 @@ import {
 	useEffect,
 	useState,
 } from "react";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 interface IAuthContext {
 	onSubmitLogin: (values: z.infer<typeof formSchemaLogin>) => any;
 	onSubmitRegister: (values: z.infer<typeof formSchemaRegister>) => any;
 	loggedInUser: ILoggedUser | any;
+	Logout: () => void;
 }
 
 const AuthContext = createContext<IAuthContext | null>(null);
 
 function AuthProvider({ children }: { children: ReactNode }) {
 	const [loggedInUser, setLoggedInUser] = useState<ILoggedUser | any>({});
+
+	async function Logout() {
+		try {
+			await axios(`${base_url}/logout`, {
+				method: "POST",
+				withCredentials: true,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			localStorage.removeItem("user-details");
+			setLoggedInUser({});
+
+			toast.success("user logged out.");
+		} catch (err) {
+			toast.error(`Sorry , unable to process the request.`);
+		}
+	}
 
 	async function onSubmitLogin(values: z.infer<typeof formSchemaLogin>) {
 		const logInUser = await axios(`${base_url}/login`, {
@@ -93,7 +114,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
 	return (
 		<AuthContext.Provider
-			value={{ onSubmitLogin, onSubmitRegister, loggedInUser }}
+			value={{ onSubmitLogin, onSubmitRegister, loggedInUser, Logout }}
 		>
 			{children}
 		</AuthContext.Provider>

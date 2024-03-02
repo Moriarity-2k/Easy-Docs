@@ -1,5 +1,3 @@
-"use client";
-
 import light from "./icons/light.svg";
 import dark from "./icons/dark.svg";
 import {

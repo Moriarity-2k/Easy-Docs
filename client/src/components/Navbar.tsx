@@ -5,6 +5,7 @@ import CircularDoc from "./icons/cirular-document.svg";
 import account from "./icons/account.svg";
 import Theme from "./Theme";
 import { useAuth } from "@/context/useAuth";
+import AccountMenu from "./AccountMenu";
 
 export default function Navbar() {
 	const navigate = useNavigate();
@@ -56,13 +57,15 @@ export default function Navbar() {
 							Sign In
 						</Button>
 					) : (
-						<img
-							src={account}
-							className="hover:cursor-pointer invert lg:h-[25px] lg:w-[25] md:h-[20px] md:w-[20px] max-md:h-[12px] max-md:w-[12px] dark:filter-none"
-							onClick={() => {
-								navigate("/profile");
-							}}
-						/>
+						// <img
+						// 	src={account}
+						// 	className="hover:cursor-pointer invert lg:h-[25px] lg:w-[25] md:h-[20px] md:w-[20px] max-md:h-[12px] max-md:w-[12px] dark:filter-none"
+						// 	onClick={() => {
+						// 		navigate("/my-accounnt");
+						// 	}}
+						// />
+
+                        <AccountMenu />
 					)}
 				</div>
 			</div>

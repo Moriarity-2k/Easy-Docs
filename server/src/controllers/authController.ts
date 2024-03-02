@@ -8,7 +8,7 @@ import { UserOnRequest } from "../TypeHelpers/helpers";
 
 const jwtSignInToken = function (id: string) {
 	const token = jwt.sign({ id }, process.env.SECRET_STRING!, {
-		expiresIn: '24d',
+		expiresIn: "24d",
 	});
 
 	return token;
@@ -87,6 +87,25 @@ export const signUp = catchAsync(
 	}
 );
 
+export const logout = catchAsync(
+	async (req: UserOnRequest, res: Response, next: NextFunction) => {
+		// console.log(req.body);
+
+		// const logged_in_user = (await user.create({
+		// 	email: req.body.email,
+		// 	password: req.body.password,
+		// 	name: req.body.name,
+		// })) as IUser;
+
+		res.clearCookie("jwt");
+
+		res.status(200).json({
+			status: "success",
+			message: "Logout successfull",
+		});
+	}
+);
+
 interface Decode {
 	id: string;
 	exp: number;
@@ -97,8 +116,8 @@ export const authenticate = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
 		const { jwt: jwt_token } = req.cookies;
 		if (!jwt_token) {
-            return res.status(401).json({
-                status: "Please Login",
+			return res.status(401).json({
+				status: "Please Login",
 				message: "You have to login to perform this action !",
 			});
 		}
@@ -114,18 +133,17 @@ export const authenticate = catchAsync(
 			});
 		}
 
-        
 		const user_found = await user.findById(decoded.id);
-        
+
 		if (!user_found) {
 			return res.status(404).json({
-                status: "error",
+				status: "error",
 				message: "User does not exist on DB",
 			});
 		}
-        
-        console.log('hello')
-        
+
+		console.log("hello");
+
 		req.user_ = user_found as IUser;
 
 		next();
