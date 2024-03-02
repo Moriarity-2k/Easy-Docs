@@ -32,17 +32,6 @@ export function SpiralSpinner({ color, sz }: IClipLoader) {
 		margin: "0 auto",
 		borderColor: color,
 	};
-	// return (
-	// 	<RingLoader
-	// 		// color={color}
-	// 		loading={true}
-	// 		cssOverride={override}
-	// 		size={sz}
-	// 		aria-label="Loading Spinner"
-	// 		data-testid="loader"
-	// 		className="z-10 absolute top-0 left-0 flex-center h-screen w-full backdrop:blur-md"
-	// 	/>
-	// );
 
 	return createPortal(
 		<div className="backdrop-blur-lg w-full h-screen absolute top-0 left-0 flex-center">
@@ -57,7 +46,6 @@ export function SpiralSpinner({ color, sz }: IClipLoader) {
 					className="z-10 absolute top-0 left-0 flex-center h-screen w-full backdrop:blur-sm"
 				/>
 			</div>
-			{/* {children} */}
 		</div>,
 		document.querySelector("#root")!
 	);

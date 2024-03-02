@@ -112,9 +112,12 @@ export default function IntroUser() {
 				</ul>
 			</div>
 
-			{/* <div>
-				<div>Favourites</div>
-			</div> */}
+			{/*
+                TODO: 
+                <div>
+                    <div>Favourites</div>
+                </div> 
+            */}
 
 			<div className="space-y-4">
 				<div className="h2-bold text-light400_light500">

@@ -53,7 +53,6 @@ function Window({ children, name }: { children: ReactElement; name: string }) {
 					{children}
 				</div>
 			</div>
-			{/* {children} */}
 		</div>,
 		document.querySelector("#root")!
 	);

@@ -115,13 +115,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
 		);
 		setLoggedInUser(logInUser.data.user);
 		return logInUser;
-
-		// console.log(values);
-		// return new Promise((resolve) => {
-		// 	setTimeout(() => {
-		// 		resolve({ success: "from the frontend promise" });
-		// 	}, 5000);
-		// });
 	}
 
 	async function onSubmitRegister(

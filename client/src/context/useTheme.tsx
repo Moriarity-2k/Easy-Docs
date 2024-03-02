@@ -36,14 +36,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 		changePreference();
 	}, [theme]);
 
-    /**
-     * TODO: 
-     * 
-     * working (didn't implement the ui)
-     * 
-     * To implement : 
-     * store it in localstorage
-     */
 	useEffect(() => {
 		const x = window.matchMedia("(prefers-color-scheme: dark)");
 		if (x.matches) {

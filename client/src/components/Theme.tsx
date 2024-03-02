@@ -26,7 +26,6 @@ const Theme = () => {
 							alt="dark"
 							width={20}
 							height={20}
-							// className="w-24"
 						/>
 					)}
 				</MenubarTrigger>

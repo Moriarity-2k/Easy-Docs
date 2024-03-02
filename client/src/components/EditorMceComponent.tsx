@@ -21,7 +21,7 @@ export default function EditorMceComponent({
 	const { currentTheme } = useTheme();
 	const theme = currentTheme && currentTheme();
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const { loggedInUser } = useAuth();
 
@@ -47,7 +47,6 @@ export default function EditorMceComponent({
 		return () => {
 			socket.off("change-in-content-from-server");
 			socket.off("someone-joined");
-			// socket.disconnect();
 		};
 	}, [id, loggedInUser]);
 
@@ -57,16 +56,12 @@ export default function EditorMceComponent({
 
 	useEffect(() => {
 		const socket = GetSocket.SingleSocket();
-		socket.emit(
-			"send-to-rooms",
-			id,
-			editorContent
-		);
+		socket.emit("send-to-rooms", id, editorContent);
 	}, [editorContent, id]);
 
 	useEffect(() => {
 		const timer = setTimeout(async () => {
-			const res = await axios(`${base_url}/document/${id}`, {
+			await axios(`${base_url}/document/${id}`, {
 				withCredentials: true,
 				headers: {
 					"Content-Type": "application/json",
@@ -76,7 +71,6 @@ export default function EditorMceComponent({
 					content: editorContent,
 				},
 			});
-			// console.log(res.data);
 		}, 500);
 
 		return () => clearTimeout(timer);
@@ -92,7 +86,6 @@ export default function EditorMceComponent({
 					"Content-Type": "application/json",
 				},
 			});
-			// console.log(data.data);
 			setEditorContent(data.data.docs.content);
 			return data.data;
 		},
@@ -114,11 +107,9 @@ export default function EditorMceComponent({
 			)}
 			<Editor
 				apiKey={import.meta.env.VITE_TINY_EDITOR_APIKEY}
-				// onInit={(evt, editor) => (editorRef.current = editor)}
 				onInit={() => {
 					setEditorLoading(false);
 				}}
-				// onChange=
 				value={editorContent || undefined}
 				onEditorChange={(new_value) => {
 					setEditorContent(() => new_value);
@@ -127,7 +118,6 @@ export default function EditorMceComponent({
 				initialValue=""
 				init={{
 					height: 0.9 * height_screen,
-					// menubar: true,
 					menu: {
 						file: {
 							title: "File",
@@ -161,40 +151,12 @@ export default function EditorMceComponent({
 					},
 					plugins:
 						"preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons",
-					// note: plugins : minimal
-					// plugins: [
-					// 	"advlist",
-					// 	"autolink",
-					// 	"lists",
-					// 	"link",
-					// 	"image",
-					// 	"charmap",
-					// 	"preview",
-					// 	"anchor",
-					// 	"searchreplace",
-					// 	"visualblocks",
-					// 	"code",
-					// 	"fullscreen",
-					// 	"insertdatetime",
-					// 	"media",
-					// 	"table",
-					// 	"code",
-					// 	"help",
-					// ],
+
 					toolbar_mode: "floating",
 					toolbar_sticky: true,
 					toolbar:
-						// note: format - too Much
-						// 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl'
-
-						// note: format - minimal
 						"undo redo | formatselect | bold italic strikethrough forecolor backcolor blockquote | fontfamily fontsizeinput | link table image media | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat fullscreen",
 
-					// note: format - 3
-					// "undo redo | blocks | " +
-					// "bold italic forecolor | alignleft aligncenter " +
-					// "alignright alignjustify | bullist numlist outdent indent | " +
-					// "removeformat | help",
 					content_style:
 						"body { font-family:Helvetica,Arial,sans-serif; font-size:14px;}",
 

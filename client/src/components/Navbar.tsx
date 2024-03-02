@@ -25,7 +25,6 @@ export default function Navbar() {
 					<span className="text-accent-blue">Docs</span>
 				</div>
 				<div className="flex items-center lg:gap-6 max-sm:gap-1 sm:gap-2 md:gap-4">
-					{/* <div className="lowercase ">Create an account</div> */}
 					<Theme />
 					<Button
 						type="button"
@@ -37,8 +36,7 @@ export default function Navbar() {
 								!Object.keys(loggedInUser).includes("email")
 							)
 								navigate("/register");
-							// TODO: have to navigate to all docs
-							else navigate("/");
+							else navigate("/all-documents");
 						}}
 					>
 						{loggedInUser === undefined ||
@@ -56,14 +54,6 @@ export default function Navbar() {
 							Sign In
 						</Button>
 					) : (
-						// <img
-						// 	src={account}
-						// 	className="hover:cursor-pointer invert lg:h-[25px] lg:w-[25] md:h-[20px] md:w-[20px] max-md:h-[12px] max-md:w-[12px] dark:filter-none"
-						// 	onClick={() => {
-						// 		navigate("/my-accounnt");
-						// 	}}
-						// />
-
                         <AccountMenu />
 					)}
 				</div>
