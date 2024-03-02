@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import catchAsync from "../utils/catchAsync";
-import document from "../models/document.model";
+import document, { IDocument } from "../models/document.model";
 import user, { IUser } from "../models/user.model";
 import { SCOPE, UserOnRequest } from "../TypeHelpers/helpers";
 
@@ -23,6 +23,37 @@ export const createDocument = catchAsync(
 				title: doc.title,
 				slug: doc.slug,
 				id: doc.id,
+			},
+		});
+	}
+);
+
+export const getAllDocuments = catchAsync(
+	async (req: UserOnRequest, res: Response, next: NextFunction) => {
+		const docs = await document
+			.find({ adminId: req.user_?._id })
+			.select("title createdOn slug");
+
+		const adminDocs = [...docs];
+		const sharedDocs = [];
+
+		for (const x of req.user_?.sharedDocuments!) {
+			const doc = (await document.findById(x.documentId)) as IDocument;
+
+			if (doc)
+				sharedDocs.push({
+					id: doc._id,
+					title: doc.title,
+					createdOn: doc.createdOn,
+					slug: doc.slug, 
+				});
+		}
+
+		res.status(200).json({
+			status: "success",
+			docs: {
+				adminDocs,
+				sharedDocs,
 			},
 		});
 	}

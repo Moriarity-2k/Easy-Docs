@@ -9,6 +9,7 @@ import { ThemeProvider } from "./context/useTheme";
 import Home from "./pages/Layout_Page";
 import Document_Editor from "./pages/Document";
 import AuthProvider from "./context/useAuth";
+import Intro from "./pages/Home";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
 		path: "/",
 		element: <Home />,
 		children: [
+            {
+                path : '/' , 
+                element : <Intro />
+            },
 			{
 				path: "/document/:slug",
 				element: <Document_Editor />,

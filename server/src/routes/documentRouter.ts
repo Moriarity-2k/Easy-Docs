@@ -4,6 +4,7 @@ import {
 	createDocument,
 	deleteDocument,
 	getAccess,
+	getAllDocuments,
 	updateDocument,
 } from "../controllers/documentController";
 import user from "../models/user.model";
@@ -18,6 +19,8 @@ const router = Router();
  */
 
 router.route("/createNewDocument").post(authenticate, createDocument);
+
+router.route("/documents/getAllDocuments").get(authenticate, getAllDocuments);
 
 router
 	.route("/document/:id")

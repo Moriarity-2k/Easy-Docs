@@ -10,6 +10,7 @@ export interface IDocument extends Document {
 	// access: { userId: Schema.Types.ObjectId; scope: SCOPE }[];
 	slug: string;
 	adminId: Schema.Types.ObjectId;
+	createdOn: Date;
 }
 
 const documentSchema = new Schema<IDocument>(
@@ -25,6 +26,10 @@ const documentSchema = new Schema<IDocument>(
 			type: Schema.Types.ObjectId,
 			required: [true, "Every document must belong to a user"],
 		},
+		createdOn: {
+			type: Date,
+			default: Date.now(),
+		},
 	},
 	{
 		toJSON: { virtuals: true },
@@ -37,6 +42,6 @@ documentSchema.pre("save", function (this, next) {
 	next();
 });
 
-const document =  model<IDocument>("document", documentSchema);
+const document = model<IDocument>("document", documentSchema);
 
 export default document;

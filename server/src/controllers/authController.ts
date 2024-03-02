@@ -96,10 +96,9 @@ interface Decode {
 export const authenticate = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
 		const { jwt: jwt_token } = req.cookies;
-
 		if (!jwt_token) {
-			return res.status(401).json({
-				status: "Please Login",
+            return res.status(401).json({
+                status: "Please Login",
 				message: "You have to login to perform this action !",
 			});
 		}
@@ -115,15 +114,18 @@ export const authenticate = catchAsync(
 			});
 		}
 
+        
 		const user_found = await user.findById(decoded.id);
-
+        
 		if (!user_found) {
 			return res.status(404).json({
-				status: "error",
+                status: "error",
 				message: "User does not exist on DB",
 			});
 		}
-
+        
+        console.log('hello')
+        
 		req.user_ = user_found as IUser;
 
 		next();

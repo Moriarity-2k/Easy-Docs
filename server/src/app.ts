@@ -1,4 +1,10 @@
-import express, { Router } from "express";
+import express, {
+	ErrorRequestHandler,
+	NextFunction,
+	Request,
+	Response,
+	Router,
+} from "express";
 import cors from "cors";
 import nocache from "nocache";
 import helmet from "helmet";
@@ -63,5 +69,16 @@ app.use(express.json());
 app.use("/api/v1/gdocs", userRouter);
 app.use("/api/v1/gdocs", documentRouter);
 
+app.use('*',
+	(
+		err: ErrorRequestHandler,
+		req: Request,
+		res: Response,
+		next: NextFunction
+	) => {
+		console.log(err);
+		res.status(404);
+	}
+);
 
 export default app;

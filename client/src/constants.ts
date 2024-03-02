@@ -39,3 +39,12 @@ export interface IEditorDisable {
 	access: boolean;
 	message: string;
 }
+
+export const CATEGORIES = [
+	"Recent",
+	"Shared with me",
+	"Favorite",
+	"All documents",
+];
+
+export const recentDays = 7 * 24 * 60 * 60 * 1000;

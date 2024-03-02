@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 // import { socket_url } from "@/constants";
 // import axios from "axios";
@@ -61,6 +62,8 @@ export default function Home() {
 				</button>
 				<CreateDocument />d
 			</div> */}
+
+            <Footer />
 		</div>
 	);
 }
