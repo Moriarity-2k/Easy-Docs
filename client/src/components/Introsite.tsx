@@ -3,9 +3,16 @@ import DOCS_COLL from "@/components/assets/colloborate.webp";
 import DOCS_SEAM from "@/components/assets/DOCS_F.png";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/useAuth";
 
 export default function Introsite() {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
+
+	const { loggedInUser } = useAuth();
+	const userNotExist =
+		loggedInUser === undefined ||
+		!Object.keys(loggedInUser).includes("email");
+
 	return (
 		<div className=" mx-auto mt-24 xl:w-[80%] max-xl:w-[95%] max-md:w-[80%] mb-4 space-y-8 text-light400_dark500">
 			<div className="md:flex md:gap-16 items-center mb-32">
@@ -26,13 +33,23 @@ export default function Introsite() {
 					</div>
 
 					<div className="flex gap-8 items-center ">
-						<div className="opacity-50">Don't have an account?</div>
+						<div className="opacity-50">
+							{userNotExist
+								? "Don't have an account?"
+								: "Try Docs for free"}
+						</div>
 						<Button
 							type="button"
-							onClick={() => navigate("/register")}
+							onClick={() => {
+								if (userNotExist) {
+									navigate("/register");
+								} else {
+									navigate("/all-documents");
+								}
+							}}
 							className="bg-docs-blue  hover:bg-docs-blue-hover body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest subtle-semibold"
 						>
-							Sign up for free
+							{userNotExist ? "Sign up for free" : "Go To Docs"}
 						</Button>
 					</div>
 				</div>

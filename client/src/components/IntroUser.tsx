@@ -21,7 +21,6 @@ export default function IntroUser() {
 				},
 				withCredentials: true,
 			});
-			console.log(docs.data.docs);
 			const x = {
 				adminDocs:
 					docs.data.docs.adminDocs &&
@@ -48,15 +47,21 @@ export default function IntroUser() {
 	}
 
 	return (
-		<div className="mx-auto lg:w-[60%] mt-24 space-y-8 md:w-[80%] w-[95%]">
+		<div className="mx-auto lg:w-[60%] mt-16 space-y-8 md:w-[80%] w-[95%]">
 			<div className="space-y-4">
+				<div className="mb-2 space-y-4">
+					<div className="text-dark200_light900 base-bold tracking-wider">
+						Start working on a new file ?
+					</div>
+					<ModalCreateDocument />
+				</div>
 				<div className="h2-bold text-light400_light500">Recent</div>
 				<ul className="flex gap-4 flex-wrap">
 					{docsData && docsData.adminDocs.length > 0 ? (
 						docsData.adminDocs
 							.slice(0, 6)
 							.map((docs: any, i: number) => {
-								console.log(docs);
+								// console.log(docs);
 								if (
 									Date.now() - recentDays <
 									Date.parse(docs.createdOn)
@@ -66,6 +71,7 @@ export default function IntroUser() {
 											navigate={navigate}
 											docs={docs}
 											i={i}
+											key={i}
 										/>
 									);
 								}
@@ -95,6 +101,7 @@ export default function IntroUser() {
 											navigate={navigate}
 											docs={docs}
 											i={i}
+											key={i}
 										/>
 									);
 								}
@@ -119,7 +126,7 @@ export default function IntroUser() {
 						0 ? (
 						[...docsData.adminDocs, ...docsData.sharedDocs].map(
 							(docs: any, i: number) => {
-								console.log(docs);
+								// console.log(docs);
 								if (
 									Date.now() - recentDays <
 									Date.parse(docs.createdOn)
@@ -129,6 +136,7 @@ export default function IntroUser() {
 											navigate={navigate}
 											docs={docs}
 											i={i}
+											key={i}
 										/>
 									);
 								}
@@ -145,6 +153,7 @@ export default function IntroUser() {
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import ModalCreateDocument from "./CreateDocument";
 
 function EachDisplayDocumnet({
 	navigate,
@@ -165,7 +174,7 @@ function EachDisplayDocumnet({
 			}
 			className="space-y-4 hover:cursor-pointer"
 		>
-			<div className="flex flex-col space-y-3 ">
+			<div className="flex flex-col space-y-3 relative">
 				<Skeleton className="h-[155px] w-[120px] bg-slate-300 rounded-sm dark:bg-light-400" />
 			</div>
 			<p className="text-dark500_light700 small-medium opacity-60">

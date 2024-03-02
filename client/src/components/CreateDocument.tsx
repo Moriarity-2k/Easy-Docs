@@ -13,7 +13,6 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
@@ -26,7 +25,12 @@ export default function ModalCreateDocument() {
 	return (
 		<Modal>
 			<Modal.Open name="create-document">
-				<button>create document</button>
+				<Button 
+					type="button"
+					className="bg-docs-blue hover:bg-docs-blue-hover w-max px-4 py-2 body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest subtle-semibold"
+				>
+					New File
+				</Button>
 			</Modal.Open>
 
 			<Modal.Window name="create-document">
@@ -98,7 +102,7 @@ function CreateDocument() {
 	});
 
 	return (
-		<div className="">
+		<div className="text-dark100_light900">
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(

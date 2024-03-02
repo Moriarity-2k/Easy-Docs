@@ -2,10 +2,12 @@ import { FaRegStar } from "react-icons/fa";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { IEditorDisable, base_url } from "@/constants";
 import toast from "react-hot-toast";
 import EditorMceComponent from "@/components/EditorMceComponent";
+import { useAuth } from "@/context/useAuth";
+import { Button } from "@/components/ui/button";
 
 /**
  *
@@ -57,15 +59,13 @@ export default function Document_Editor() {
 		async function getAccess() {
 			try {
 				// console.log("IN GET ACCESSS : ");
-				const x = await axios(`${base_url}/document/${id}`, {
+				const x = await axios(`${base_url}/document/getAccess/${id}`, {
 					method: "GET",
 					withCredentials: true,
 					headers: {
 						"Content-Type": "application/json",
 					},
 				});
-
-				console.log("hello : ", x.data.message);
 
 				if (x.data.message === 10) {
 					/**
@@ -115,10 +115,55 @@ export default function Document_Editor() {
 					{editorDisable.access === true &&
 					(editorDisable.message === "No Access" ||
 						editorDisable.message === "loading") ? (
-						<div> Ask Access </div>
+						<AskAccess id={id} />
 					) : (
-						<EditorMceComponent editorDisable={editorDisable} id={id} />
+						<EditorMceComponent
+							editorDisable={editorDisable}
+							id={id}
+						/>
 					)}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function AskAccess({ id }: { id: string }) {
+	return (
+		<div className="px-2 py-4 mt-8 text-dark500_light500 flex-center ">
+			<div className="space-y-6">
+				<div className="body-semibold tracking-wider">
+					You do not have access to this file .
+				</div>
+				<Button
+					type="button"
+					onClick={async () => {
+						try {
+							const x = await axios(
+								`${base_url}/document/askPermission`,
+								{
+									method: "POST",
+									headers: {
+										"Content-Type": "application/json",
+									},
+									data: {
+										docId: id,
+									},
+									withCredentials: true,
+								}
+							);
+
+							toast.success(x.data.message);
+						} catch (err: any) {
+							toast.error(err.response.data.message);
+						}
+					}}
+					className="bg-docs-blue hover:bg-docs-blue-hover w-full  body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest subtle-semibold"
+				>
+					Ask Permission
+				</Button>
+				<div className="small-regular text-light400_light500">
+					* The owner of this file will be notified.
 				</div>
 			</div>
 		</div>

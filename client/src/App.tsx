@@ -11,6 +11,8 @@ import Document_Editor from "./pages/Document";
 import AuthProvider from "./context/useAuth";
 import Intro from "./pages/Home";
 import Account from "./pages/Account";
+import IntroUser from "./components/IntroUser";
+import DocumentAccessRequest from "./pages/DocumentAccessRequest";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
 			{
 				path: "/",
 				element: <Intro />,
+			},
+			{
+				path: "/all-documents",
+				element: <IntroUser />,
+			},
+			{
+				path: "/notifications",
+				element: <DocumentAccessRequest />,
 			},
 			{
 				path: "/my-account",

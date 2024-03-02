@@ -134,7 +134,7 @@ export const authenticate = catchAsync(
 			});
 		}
 
-		console.log("hello");
+		console.log("Authenticated successfully");
 
 		req.user_ = user_found as IUser;
 

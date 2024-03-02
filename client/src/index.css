@@ -18,6 +18,9 @@
     .card-wrapper {
         @apply dark:dark-gradient bg-light-900 shadow-light-100 dark:shadow-dark-100;
     }
+    .card-wrapper-2 {
+        @apply dark:dark-gradient bg-light-900 shadow-light-100 dark:shadow-none;
+    }
     .btn {
         @apply bg-light-800 dark:bg-dark-300 !important;
     }

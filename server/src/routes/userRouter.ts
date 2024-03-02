@@ -5,7 +5,7 @@ import {
 	logout,
 	signUp,
 } from "../controllers/authController";
-import { updatePassword, updateUserName } from "../controllers/userController";
+import { getNotifications, updatePassword, updateUserName } from "../controllers/userController";
 
 const router = Router();
 
@@ -16,6 +16,10 @@ router.route("/logout").post(authenticate, logout);
 router.route("/user/updateUserName").post(authenticate, updateUserName);
 
 router.route("/user/updatePassword").post(authenticate, updatePassword);
+
+
+router.route('/user/notifications').get(authenticate , getNotifications);
+
 
 /**
  *

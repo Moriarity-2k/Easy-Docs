@@ -38,6 +38,14 @@ export default function AccountMenu() {
 					>
 						Logout
 					</MenubarItem>
+
+                    <MenubarItem
+						key={"notify"}
+						className="flex items-center gap-4 px-2.5 py-2 dark:focus:bg-dark-400 "
+						onClick={() => navigate('/notifications')}
+					>
+						Notifications
+					</MenubarItem>
 				</MenubarContent>
 			</MenubarMenu>
 		</Menubar>

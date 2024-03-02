@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import { Server } from "socket.io";
 import http from "http";
 import { Router } from "express";
+import document from "./models/document.model";
 // import { Request, Response, Router, json } from "express";
 // import express from "express";
 
@@ -33,8 +34,8 @@ io.on("connection", (socket) => {
 		socket.broadcast.to(args[0]).emit("someone-joined", args[1]);
 	});
 
-	socket.on("send-to-rooms", (...args) => {
-		console.log({ CONTENT: args[1], ROOM: args[0] });
+	socket.on("send-to-rooms", async (...args) => {
+		// console.log({ CONTENT: args[1], ROOM: args[0] });
 		socket.broadcast
 			.to(args[0])
 			.emit("change-in-content-from-server", args[1]);

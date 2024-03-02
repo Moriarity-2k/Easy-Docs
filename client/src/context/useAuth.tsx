@@ -47,6 +47,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
 			localStorage.removeItem("user-details");
 			setLoggedInUser({});
+			window.location.replace("/");
 
 			toast.success("user logged out.");
 		} catch (err) {

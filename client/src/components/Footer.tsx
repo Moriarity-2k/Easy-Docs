@@ -17,12 +17,14 @@ export default function Footer() {
 					.
 				</div>
 				<div className="font-mono tracking-tighter md:space-y-2 max-md:space-y-4 max-md:paragraph-medium">
-					I am
-					<span className="base-bold mx-2 capitalize">
-						Surya Teja
-					</span>
-					. I am from a tier 3 college (2022 passout). I am actively
-					looking for a SDE role (fresher).
+					<div className="max-sm:text-[13px]">
+						I am
+						<span className="font-semibold mx-2 capitalize">
+							Surya Teja
+						</span>
+						. I am from a tier 3 college (2022 passout). I am
+						actively looking for a job ( SDE - fresher).
+					</div>
 					<div>
 						Please reach out to
 						<a

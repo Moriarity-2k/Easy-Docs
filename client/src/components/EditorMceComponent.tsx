@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { SpiralSpinner } from "./Spinner";
 
 import { Editor } from "@tinymce/tinymce-react";
-import { IEditorDisable, socket_url } from "@/constants";
+import { IEditorDisable, base_url } from "@/constants";
 import toast from "react-hot-toast";
-import { io } from "socket.io-client";
 import { useAuth } from "@/context/useAuth";
 import GetSocket from "@/context/useSocket";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function EditorMceComponent({
 	editorDisable,
@@ -19,6 +21,8 @@ export default function EditorMceComponent({
 	const { currentTheme } = useTheme();
 	const theme = currentTheme && currentTheme();
 
+    const navigate = useNavigate();
+
 	const { loggedInUser } = useAuth();
 
 	const height_screen = window.innerHeight;
@@ -26,20 +30,13 @@ export default function EditorMceComponent({
 	const [editorContent, setEditorContent] = useState<string | null>(null);
 	const [editorLoading, setEditorLoading] = useState<boolean>(true);
 
-	// const change_in_content_from_server = (res: any) => {
-	// 	setEditorContent(res);
-	// };
-
 	useEffect(() => {
 		const socket = GetSocket.SingleSocket();
 
 		socket.emit("join-room", id, loggedInUser.name);
 		socket.on("change-in-content-from-server", (res) => {
 			console.log({ res });
-			setEditorContent(
-				res === "" ? null : res
-				// === null ? "   " : res
-			);
+			setEditorContent(res);
 		});
 
 		socket.on("someone-joined", (res) => {
@@ -64,9 +61,51 @@ export default function EditorMceComponent({
 			"send-to-rooms",
 			id,
 			editorContent
-			// === null ? "  " : editorContent
 		);
 	}, [editorContent, id]);
+
+	useEffect(() => {
+		const timer = setTimeout(async () => {
+			const res = await axios(`${base_url}/document/${id}`, {
+				withCredentials: true,
+				headers: {
+					"Content-Type": "application/json",
+				},
+				method: "POST",
+				data: {
+					content: editorContent,
+				},
+			});
+			// console.log(res.data);
+		}, 500);
+
+		return () => clearTimeout(timer);
+	}, [editorContent, id]);
+
+	const { isLoading, error, isError } = useQuery({
+		queryKey: ["document-id"],
+		queryFn: async () => {
+			const data = await axios(`${base_url}/document/${id}`, {
+				method: "GET",
+				withCredentials: true,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			// console.log(data.data);
+			setEditorContent(data.data.docs.content);
+			return data.data;
+		},
+	});
+
+	if (isLoading) {
+		return <SpiralSpinner sz={90} color="#1a73e8" />;
+	}
+
+	if (isError) {
+		toast.error(error.message);
+		navigate("/");
+	}
 
 	return (
 		<>

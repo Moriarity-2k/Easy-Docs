@@ -5,6 +5,9 @@ import {
 	deleteDocument,
 	getAccess,
 	getAllDocuments,
+	getDocument,
+	getPermission,
+	grantPermission,
 	updateDocument,
 } from "../controllers/documentController";
 import user from "../models/user.model";
@@ -22,9 +25,14 @@ router.route("/createNewDocument").post(authenticate, createDocument);
 
 router.route("/documents/getAllDocuments").get(authenticate, getAllDocuments);
 
+router.route("/document/askPermission").post(authenticate, getPermission);
+router.route("/document/grantPermission").post(authenticate, grantPermission);
+
+router.route("/document/getAccess/:id").get(authenticate, getAccess);
+
 router
 	.route("/document/:id")
-	.get(authenticate, getAccess)
+    .get(authenticate , getDocument)
 	.post(authenticate, updateDocument)
 	.delete(authenticate, deleteDocument);
 

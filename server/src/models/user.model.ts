@@ -12,6 +12,10 @@ export interface IUser extends Document {
 	sharedDocuments: { documentId: string; role: SCOPE }[];
 	// sharedDocuments: {}[];
 	_id?: Schema.Types.ObjectId;
+	AccessPermission: {
+		userId: Schema.Types.ObjectId;
+		docId: Schema.Types.ObjectId;
+	}[];
 }
 
 /**
@@ -51,12 +55,15 @@ const userScehma = new Schema<IUser>({
 	sharedDocuments: {
 		type: [{}],
 	},
+	AccessPermission: {
+		type: [{ userId: Schema.Types.ObjectId, docId: Schema.Types.ObjectId }],
+	},
 });
 
 userScehma.pre("save", async function (this, next) {
 	if (!this.isModified("password")) next();
 
-    console.log('hello')
+	console.log("hello");
 	this.password = await bcrypt.hash(this.password, 11);
 	// this.sharedDocuments = [];
 
