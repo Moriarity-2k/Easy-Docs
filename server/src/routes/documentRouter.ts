@@ -1,4 +1,4 @@
-import { NextFunction, Response, Router } from "express";
+import {  Router } from "express";
 import { authenticate } from "../controllers/authController";
 import {
 	createDocument,
@@ -10,9 +10,6 @@ import {
 	grantPermission,
 	updateDocument,
 } from "../controllers/documentController";
-import user from "../models/user.model";
-import { SCOPE, UserOnRequest } from "../TypeHelpers/helpers";
-import { Types, Schema } from "mongoose";
 
 const router = Router();
 

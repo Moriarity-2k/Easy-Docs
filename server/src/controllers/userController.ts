@@ -36,7 +36,7 @@ export const updatePassword = catchAsync(
 		const pass = req.body.password;
 		const new_pass = req.body.new_pass;
 
-		console.log({ pass, new_pass });
+		// console.log({ pass, new_pass });
 
 		// console.log({ user: req.user_ });
 

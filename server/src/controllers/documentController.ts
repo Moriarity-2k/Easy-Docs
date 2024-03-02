@@ -14,7 +14,7 @@ export const createDocument = catchAsync(
 			// access: [{ userId: body.userId, scope: SCOPE.ADMIN }],
 		});
 
-		console.log({ doc });
+		// console.log({ doc });
 
 		res.status(201).json({
 			status: "success",
@@ -224,12 +224,10 @@ export const getPermission = catchAsync(
 );
 
 // changed Access Permsiio
-// object of userId , docId
 export const grantPermission = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
 		// send the email , docId from body , find the user , if exists
 		// => pull out the userId from the admin's accessPerm
-		// => user's sharedDocs , insert the docId with permission
 		// for now grant all
 
 		const emailId = req.body.email;

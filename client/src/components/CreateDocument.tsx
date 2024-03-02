@@ -64,13 +64,6 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
 	console.log(created_document);
 	return created_document;
 
-	// 	console.log(values);
-	//
-	// 	return new Promise((resolve) => {
-	// 		setTimeout(() => {
-	// 			resolve({ success: "from the frontend promise" });
-	// 		}, 5000);
-	// 	});
 }
 
 function CreateDocument() {
@@ -97,7 +90,6 @@ function CreateDocument() {
 			navigate(
 				`/document/${doc_data.slug}?id=${doc_data.id}&title=${doc_data.title}`
 			);
-			// navigate(`/document/${data.data}`);
 		},
 	});
 

@@ -16,8 +16,6 @@ const jwtSignInToken = function (id: string) {
 
 export const Login = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
-		console.log(req.body);
-
 		const user_db = (await user.findOne({
 			email: req.body.email,
 		})) as IUser;

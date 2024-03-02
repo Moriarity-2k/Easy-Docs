@@ -16,13 +16,6 @@ import morgan from "morgan";
 
 const app = express();
 
-// app.use(
-// 	cors({
-// 		credentials: true,
-// 		origin: process.env.CLIENT_ORIGIN_URL,
-// 	})
-// );
-
 app.use(
 	helmet({
 		hsts: {
@@ -45,9 +38,6 @@ if (process.env.NODE_ENV === "development") {
 	app.use(morgan("dev"));
 }
 
-// app.use((_, res, _2) => {
-// 	res.contentType("application/json; charset-utf-8");
-// });
 app.use(nocache());
 
 app.use(

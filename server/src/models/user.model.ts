@@ -8,7 +8,6 @@ export interface IUser extends Document {
 	password: string;
 	name?: string;
 	active: boolean;
-	// sharedDocuments: { documentId: Schema.Types.ObjectId; role: SCOPE }[];
 	sharedDocuments: { documentId: string; role: SCOPE }[];
 	// sharedDocuments: {}[];
 	_id?: Schema.Types.ObjectId;
@@ -20,7 +19,6 @@ export interface IUser extends Document {
 
 /**
  *
- * OWNER -> the one that creates and only admin can delete
  *
  * PUBLIC -> Anyone can view
  * PRIVATE -> People only he shares with using (email)
@@ -32,7 +30,6 @@ export interface IUser extends Document {
 
 const userScehma = new Schema<IUser>({
 	// _id: {
-	//
 	// },
 	name: {
 		type: String,

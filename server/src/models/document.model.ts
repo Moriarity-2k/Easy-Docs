@@ -18,9 +18,7 @@ const documentSchema = new Schema<IDocument>(
 		title: { type: String, required: true, unique: true },
 		content: { type: String, default: "" },
 		isPublic: { type: Boolean, default: true },
-		// access: {
-		// 	type: [{ userId: Schema.Types.ObjectId, scope: SCOPE }],
-		// },
+		// access: {}[],
 		slug: String,
 		adminId: {
 			type: Schema.Types.ObjectId,
