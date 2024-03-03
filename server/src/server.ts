@@ -51,6 +51,6 @@ mongoose
 	.then(() => {
 		console.log("DB Connected ...");
 	})
-	.catch((reason: any) => {
-		console.log("DB ERROR : ", reason);
-	});
+	// .catch((reason: any) => {
+	// 	console.log("DB ERROR : ", reason);
+	// });

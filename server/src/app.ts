@@ -13,8 +13,14 @@ import documentRouter from "./routes/documentRouter";
 import cookieParser from "cookie-parser";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 import morgan from "morgan";
+import compression from "compression";
+import xss from "xss-clean";
+import AppError from "./utils/appError";
+import globalErrorHandler from "./controllers/errorController";
 
 const app = express();
+
+app.use(compression());
 
 app.use(
 	helmet({
@@ -51,6 +57,7 @@ app.use(
 );
 
 app.use(ExpressMongoSanitize());
+app.use(xss());
 app.use(cookieParser());
 app.use(express.json());
 
@@ -59,16 +66,10 @@ app.use(express.json());
 app.use("/api/v1/gdocs", userRouter);
 app.use("/api/v1/gdocs", documentRouter);
 
-app.use('*',
-	(
-		err: ErrorRequestHandler,
-		req: Request,
-		res: Response,
-		next: NextFunction
-	) => {
-		// console.log(err);
-		res.status(404);
-	}
-);
+app.all("*", (req, res, next) => {
+	next(new AppError(`Can't find ${req.url} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 
 export default app;
