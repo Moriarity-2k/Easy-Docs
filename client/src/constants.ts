@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const base_url = "http://localhost:3000/api/v1/gdocs";
+export const base_url = "https://easy-docs-umber.vercel.app/api/v1/gdocs";
 export const socket_url = "http://localhost:3000/";
 
 export const REGISTER_VALUES = [
