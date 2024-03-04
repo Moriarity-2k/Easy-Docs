@@ -113,7 +113,8 @@ export const authenticate = catchAsync(
 		} else if (req.cookies.jwt) {
 			token = req.cookies.jwt;
 		}
-		console.log({ token });
+		// console.log({ token });
+
 		if (!token) {
 			return res.status(401).json({
 				status: "Please Login",
@@ -125,7 +126,7 @@ export const authenticate = catchAsync(
 
 		const decoded = jwtDecode<Decode>(token);
 
-		console.log({ decoded });
+		// console.log({ decoded });
 
 		// console.log(decoded.exp > Date.now());
 
@@ -144,6 +145,8 @@ export const authenticate = catchAsync(
 				message: "User does not exist on DB",
 			});
 		}
+
+		// console.log("Authenticate success");
 
 		req.user_ = user_found as IUser;
 

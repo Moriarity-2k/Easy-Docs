@@ -31,6 +31,7 @@ export default function EditorMceComponent({
 	const [editorContent, setEditorContent] = useState<string | null>(null);
 	const [editorLoading, setEditorLoading] = useState<boolean>(true);
 
+	// socket initiali - working fine
 	useEffect(() => {
 		const socket = GetSocket.SingleSocket();
 
@@ -55,10 +56,11 @@ export default function EditorMceComponent({
 		toast.error(editorDisable.message);
 	}
 
-	useEffect(() => {
-		const socket = GetSocket.SingleSocket();
-		socket.emit("send-to-rooms", id, editorContent);
-	}, [editorContent, id]);
+	// socket communication - not working fine
+	// useEffect(() => {
+	// 	const socket = GetSocket.SingleSocket();
+	// 	socket.emit("send-to-rooms", id, editorContent);
+	// }, [editorContent, id]);
 
 	useEffect(() => {
 		const timer = setTimeout(async () => {
@@ -73,11 +75,12 @@ export default function EditorMceComponent({
 					content: editorContent,
 				},
 			});
-		}, 500);
+		}, 1000);
 
 		return () => clearTimeout(timer);
 	}, [editorContent, id]);
 
+	// Get Document - working fine
 	const { isLoading, error, isError } = useQuery({
 		queryKey: ["document-id"],
 		queryFn: async () => {
@@ -86,6 +89,7 @@ export default function EditorMceComponent({
 				withCredentials: true,
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: GetBearerToken(),
 				},
 			});
 			setEditorContent(data.data.docs.content);
@@ -117,6 +121,16 @@ export default function EditorMceComponent({
 					setEditorContent(() => new_value);
 				}}
 				disabled={editorDisable.access}
+				// onDirty={(value) => {
+				// 	console.log({ value });
+				// 	const socket = GetSocket.SingleSocket();
+				// 	socket.emit("send-to-rooms", id, editorContent);
+				// }}
+				onKeyUp={() => {
+					// console.log({a});
+					const socket = GetSocket.SingleSocket();
+					socket.emit("send-to-rooms", id, editorContent);
+				}}
 				initialValue=""
 				init={{
 					height: 0.9 * height_screen,

@@ -43,6 +43,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 				withCredentials: true,
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: GetBearerToken(),
 				},
 			});
 
