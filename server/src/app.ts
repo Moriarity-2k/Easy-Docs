@@ -77,17 +77,18 @@ app.use(express.json());
 
 // routes ->
 
-app.set("view engine", "ejs");
-app.engine("ejs", require("ejs").__express);
-app.set("views", path.join(__dirname, "../views"));
+// note: render engine setup
+// app.set("view engine", "ejs");
+// app.engine("ejs", require("ejs").__express);
+// app.set("views", path.join(__dirname, "../views"));
 
 app.use("/api/v1/gdocs", userRouter);
 app.use("/api/v1/gdocs", documentRouter);
 
 // views probably
-app.get("/", (req, res) => {
-	res.render("index");
-});
+// app.get("/", (req, res) => {
+// 	res.render("index");
+// });
 
 app.all("*", (req, res, next) => {
 	next(new AppError(`Can't find ${req.url} on this server!`, 404));
