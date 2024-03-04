@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-// export const base_url = "http://localhost:3000/api/v1/gdocs";
-// export const socket_url = "http://localhost:3000/";
-export const base_url = "https://easydocs-server-2.onrender.com/api/v1/gdocs";
-export const socket_url = "https://easydocs-server-2.onrender.com/";
+export const base_url = "http://localhost:3000/api/v1/gdocs";
+export const socket_url = "http://localhost:3000/";
+// export const base_url = "https://easydocs-server-2.onrender.com/api/v1/gdocs";
+// export const socket_url = "https://easydocs-server-2.onrender.com/";
 
 export const REGISTER_VALUES = [
 	{ field: "username", placeholder: "enter user name" },

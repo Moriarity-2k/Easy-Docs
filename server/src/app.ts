@@ -20,18 +20,9 @@ import globalErrorHandler from "./controllers/errorController";
 
 const app = express();
 
-app.use(compression());
 
-app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-	res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-	res.setHeader(
-		"Access-Control-Allow-Headers",
-		"Authorization, Content-Type"
-	);
-	res.setHeader("Access-Control-Allow-Credentials", "true");
-	next();
-});
+
+app.use(compression());
 
 app.use(
 	helmet({
@@ -55,20 +46,30 @@ app.use(
 // 	app.use(morgan("dev"));
 // }
 
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+	res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Authorization, Content-Type"
+	);
+	res.setHeader("Access-Control-Allow-Credentials", "true");
+	next();
+});
+// app.use(cors());
 app.use(nocache());
-app.use(cors());
 
-// app.use(
-// 	cors({
-// 		// origin: process.env.CLIENT_ORIGIN_URL,
-// 		// origin: '*',
-//         origin : ['*'],
-// 		methods: ["GET", "POST", "DELETE", "PUT"],
-// 		allowedHeaders: ["Authorization", "Content-Type"],
-// 		maxAge: 86400,
-// 		credentials: true,
-// 	})
-// );
+app.use(
+	cors({
+		origin: process.env.CLIENT_ORIGIN_URL,
+		// origin: '*',
+        // origin : ['*'],
+		methods: ["GET", "POST", "DELETE", "PUT"],
+		allowedHeaders: ["Authorization", "Content-Type"],
+		maxAge: 86400,
+		credentials: true,
+	})
+);
 
 app.use(ExpressMongoSanitize());
 // app.use(xss());
