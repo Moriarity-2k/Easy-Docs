@@ -113,7 +113,7 @@ export const authenticate = catchAsync(
 		} else if (req.cookies.jwt) {
 			token = req.cookies.jwt;
 		}
-
+		console.log({ token });
 		if (!token) {
 			return res.status(401).json({
 				status: "Please Login",
@@ -124,7 +124,9 @@ export const authenticate = catchAsync(
 		const jwtString = jwt.verify(token, process.env.SECRET_STRING!);
 
 		const decoded = jwtDecode<Decode>(token);
-		// console.log(decoded);
+
+		console.log({ decoded });
+
 		// console.log(decoded.exp > Date.now());
 
 		if (decoded.exp > Date.now()) {
