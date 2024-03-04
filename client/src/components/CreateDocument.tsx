@@ -20,12 +20,13 @@ import { base_url } from "@/constants";
 import { ClipSpinner } from "@/components/Spinner";
 import FormElement from "@/components/FormElement";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { GetBearerToken } from "@/lib/helpers";
 
 export default function ModalCreateDocument() {
 	return (
 		<Modal>
 			<Modal.Open name="create-document">
-				<Button 
+				<Button
 					type="button"
 					className="bg-docs-blue hover:bg-docs-blue-hover w-max px-4 py-2 body-semibold dark:bg-docs-blue dark:hover:bg-docs-blue-hover text-white dark:text-white uppercase tracking-widest subtle-semibold"
 				>
@@ -55,6 +56,7 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
 		withCredentials: true,
 		headers: {
 			"Content-Type": "application/json",
+			Authorization: GetBearerToken(),
 		},
 		data: {
 			title: values.title,
@@ -63,7 +65,6 @@ async function onSubmit(values: z.infer<typeof formSchema>) {
 	});
 	// console.log(created_document);
 	return created_document;
-
 }
 
 function CreateDocument() {

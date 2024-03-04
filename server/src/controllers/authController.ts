@@ -48,7 +48,7 @@ export const Login = catchAsync(
 		res.status(200).json({
 			status: "success",
 			message: "Log In successfull",
-			// token,
+			token,
 			user: {
 				name: user_db.name,
 				email: user_db.email,
@@ -76,7 +76,7 @@ export const signUp = catchAsync(
 		res.status(200).json({
 			status: "success",
 			message: "Sign Up successfull",
-			// token,
+			token,
 			user: {
 				name: created_user.name,
 				email: created_user.email,
@@ -104,16 +104,27 @@ interface Decode {
 
 export const authenticate = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
-		const { jwt: jwt_token } = req.cookies;
-		if (!jwt_token) {
+		let token;
+		if (
+			req.headers.authorization &&
+			req.headers.authorization.startsWith("Bearer")
+		) {
+			token = req.headers.authorization.split(" ")[1];
+		} else if (req.cookies.jwt) {
+			token = req.cookies.jwt;
+		}
+
+		if (!token) {
 			return res.status(401).json({
 				status: "Please Login",
 				message: "You have to login to perform this action !",
 			});
 		}
-		const jwtString = jwt.verify(jwt_token, process.env.SECRET_STRING!);
 
-		const decoded = jwtDecode<Decode>(jwt_token);
+		const jwtString = jwt.verify(token, process.env.SECRET_STRING!);
+
+		const decoded = jwtDecode<Decode>(token);
+		// console.log(decoded);
 		// console.log(decoded.exp > Date.now());
 
 		if (decoded.exp > Date.now()) {
@@ -131,8 +142,6 @@ export const authenticate = catchAsync(
 				message: "User does not exist on DB",
 			});
 		}
-
-		// console.log("Authenticated successfully");
 
 		req.user_ = user_found as IUser;
 

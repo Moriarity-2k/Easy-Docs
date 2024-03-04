@@ -10,6 +10,7 @@ import GetSocket from "@/context/useSocket";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { GetBearerToken } from "@/lib/helpers";
 
 export default function EditorMceComponent({
 	editorDisable,
@@ -65,6 +66,7 @@ export default function EditorMceComponent({
 				withCredentials: true,
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: GetBearerToken(),
 				},
 				method: "POST",
 				data: {

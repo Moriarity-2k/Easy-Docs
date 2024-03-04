@@ -18,6 +18,7 @@ export default function IntroUser() {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: GetBearerToken(),
 				},
 				withCredentials: true,
 			});
@@ -157,6 +158,7 @@ export default function IntroUser() {
 import { Skeleton } from "@/components/ui/skeleton";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import ModalCreateDocument from "./CreateDocument";
+import { GetBearerToken } from "@/lib/helpers";
 
 function EachDisplayDocumnet({
 	navigate,

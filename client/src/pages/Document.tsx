@@ -7,7 +7,7 @@ import { IEditorDisable, base_url } from "@/constants";
 import toast from "react-hot-toast";
 import EditorMceComponent from "@/components/EditorMceComponent";
 import { Button } from "@/components/ui/button";
-
+import { GetBearerToken } from "@/lib/helpers";
 
 export default function Document_Editor() {
 	// const { slug } = useParams();
@@ -30,6 +30,7 @@ export default function Document_Editor() {
 					withCredentials: true,
 					headers: {
 						"Content-Type": "application/json",
+						Authorization: GetBearerToken(),
 					},
 				});
 
@@ -107,6 +108,7 @@ function AskAccess({ id }: { id: string }) {
 									method: "POST",
 									headers: {
 										"Content-Type": "application/json",
+										Authorization: GetBearerToken(),
 									},
 									data: {
 										docId: id,

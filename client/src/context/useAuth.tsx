@@ -6,6 +6,7 @@ import {
 	formSchemaUpdatePassword,
 	formSchemaUpdateUserName,
 } from "@/constants";
+import { GetBearerToken, SetBearerToken } from "@/lib/helpers";
 import axios from "axios";
 import {
 	ReactNode,
@@ -47,6 +48,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
 			localStorage.removeItem("user-details");
 			setLoggedInUser({});
+			SetBearerToken("");
 			window.location.replace("/");
 
 			toast.success("user logged out.");
@@ -63,6 +65,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			withCredentials: true,
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: GetBearerToken(),
 			},
 			data: {
 				name: values.username,
@@ -87,6 +90,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			withCredentials: true,
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: GetBearerToken(),
 			},
 			data: {
 				password: values.password,
@@ -114,6 +118,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			JSON.stringify(logInUser.data.user)
 		);
 		setLoggedInUser(logInUser.data.user);
+		SetBearerToken(logInUser.data.token);
 		return logInUser;
 	}
 
@@ -137,6 +142,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			JSON.stringify(created_user.data.user)
 		);
 		setLoggedInUser(created_user.data.user);
+		SetBearerToken(created_user.data.token);
 		return created_user;
 	}
 
