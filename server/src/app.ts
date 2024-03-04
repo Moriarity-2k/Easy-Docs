@@ -17,7 +17,6 @@ import compression from "compression";
 // import xss from "xss-clean";
 import AppError from "./utils/appError";
 import globalErrorHandler from "./controllers/errorController";
-import path from "path";
 
 const app = express();
 
@@ -57,6 +56,7 @@ app.use(
 // }
 
 app.use(nocache());
+app.use(cors());
 
 // app.use(
 // 	cors({
