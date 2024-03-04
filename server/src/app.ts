@@ -79,7 +79,7 @@ app.use(express.json());
 
 app.set("view engine", "ejs");
 app.engine("ejs", require("ejs").__express);
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "../views"));
 
 app.use("/api/v1/gdocs", userRouter);
 app.use("/api/v1/gdocs", documentRouter);
