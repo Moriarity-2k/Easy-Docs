@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { ClipSpinner } from "./Spinner";
 import { base_url } from "@/constants";
+import { GetBearerToken } from "@/lib/helpers";
 
 export default function SearchResultsWindow({ id }: { id: string }) {
 	const [x, setX] = useState<string>("");
@@ -14,8 +15,8 @@ export default function SearchResultsWindow({ id }: { id: string }) {
 
 	useEffect(() => {
 		if (x.trim() === "") return;
-		console.log({ x });
-        setLoading(true);
+		// console.log({ x, id });
+		setLoading(true);
 		const timer = setTimeout(async () => {
 			try {
 				const username_search_results = await axios(
@@ -24,6 +25,7 @@ export default function SearchResultsWindow({ id }: { id: string }) {
 						method: "GET",
 						headers: {
 							"Content-Type": "application/json",
+							Authorization: GetBearerToken(),
 						},
 						withCredentials: true,
 					}

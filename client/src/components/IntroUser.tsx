@@ -43,7 +43,7 @@ export default function IntroUser() {
 	}
 
 	if (error) {
-		console.log(error);
+		// console.log(error);
 		toast.error(`Error on fetching files`);
 	}
 
@@ -92,7 +92,7 @@ export default function IntroUser() {
 						docsData.sharedDocs
 							.slice(0, 6)
 							.map((docs: any, i: number) => {
-								console.log(docs);
+								// console.log(docs);
 								if (
 									Date.now() - recentDays <
 									Date.parse(docs.createdOn)

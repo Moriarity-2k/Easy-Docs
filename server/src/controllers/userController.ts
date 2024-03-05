@@ -43,7 +43,7 @@ export const updatePassword = catchAsync(
 
 		const new_user = await user.findById(req.user_?._id);
 
-		console.log({ new_user });
+		// console.log({ new_user });
 
 		const z = await comparePasswords(pass, new_user?.password!);
 

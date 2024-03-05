@@ -4,6 +4,7 @@ import { ClipSpinner } from "./Spinner";
 import { Button } from "./ui/button";
 import axios from "axios";
 import { base_url } from "@/constants";
+import { GetBearerToken } from "@/lib/helpers";
 
 export default function SearchResultsIndividual({
 	names,
@@ -44,6 +45,7 @@ function EachFoundUser({
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: GetBearerToken(),
 				},
 				data: {
 					docId: docId,
