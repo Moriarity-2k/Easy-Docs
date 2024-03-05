@@ -17,10 +17,9 @@ import compression from "compression";
 // import xss from "xss-clean";
 import AppError from "./utils/appError";
 import globalErrorHandler from "./controllers/errorController";
+import user from "./models/user.model";
 
 const app = express();
-
-
 
 app.use(compression());
 
@@ -64,7 +63,7 @@ app.use(
 	cors({
 		origin: process.env.CLIENT_ORIGIN_URL,
 		// origin: '*',
-        // origin : ['*'],
+		// origin : ['*'],
 		methods: ["GET", "POST", "DELETE", "PUT"],
 		allowedHeaders: ["Authorization", "Content-Type"],
 		maxAge: 86400,

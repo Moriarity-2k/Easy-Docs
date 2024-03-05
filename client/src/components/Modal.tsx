@@ -44,7 +44,7 @@ function Window({ children, name }: { children: ReactElement; name: string }) {
 	if (values?.open !== name) return;
 	return createPortal(
 		<div className="backdrop-blur-sm w-full h-screen absolute top-0 left-0 flex-center">
-			<div className="border-2 light-border xl:w-1/3 lg:w-1/2 md:w-2/3 sm:w-full max-sm:w-full mx-auto p-[2rem] background-light800_dark400">
+			<div className="border-2 light-border-2 xl:w-1/3 lg:w-1/2 md:w-2/3 sm:w-full max-sm:w-full mx-auto p-[2rem] background-light800_dark400">
 				<div className="card-wrapper-2">
 					<MdClose
 						className="h1-bold hover:cursor-pointer float-right"

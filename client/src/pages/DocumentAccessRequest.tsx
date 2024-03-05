@@ -66,7 +66,8 @@ export default function DocumentAccessRequest() {
 													},
 													data: {
 														docId: eachRequest.id,
-														email: eachRequest.email,
+														username:
+															eachRequest.username,
 													},
 													withCredentials: true,
 												}

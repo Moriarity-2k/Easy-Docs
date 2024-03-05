@@ -230,12 +230,13 @@ export const grantPermission = catchAsync(
 		// => pull out the userId from the admin's accessPerm
 		// for now grant all
 
-		const emailId = req.body.email;
+		const name = req.body.username;
+		// const emailId = req.body.email;
 		const docId = req.body.docId;
 
 		// console.log(emailId, docId);
 
-		const req_user_ = await user.findOne({ email: emailId })!;
+		const req_user_ = await user.findOne({ name })!;
 
 		req.user_!.AccessPermission = req.user_!.AccessPermission.filter(
 			(eachPerm) => {

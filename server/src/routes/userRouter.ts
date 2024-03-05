@@ -5,7 +5,12 @@ import {
 	logout,
 	signUp,
 } from "../controllers/authController";
-import { getNotifications, updatePassword, updateUserName } from "../controllers/userController";
+import {
+	getNotifications,
+	querySearch,
+	updatePassword,
+	updateUserName,
+} from "../controllers/userController";
 
 const router = Router();
 
@@ -17,9 +22,9 @@ router.route("/user/updateUserName").post(authenticate, updateUserName);
 
 router.route("/user/updatePassword").post(authenticate, updatePassword);
 
+router.route("/user/querysearch").get(authenticate, querySearch);
 
-router.route('/user/notifications').get(authenticate , getNotifications);
-
+router.route("/user/notifications").get(authenticate, getNotifications);
 
 /**
  *
@@ -27,10 +32,10 @@ router.route('/user/notifications').get(authenticate , getNotifications);
  *
  * If Login -> DONE
  *      date -- Name
- *      update -- password 
+ *      update -- password
  *
  * Else
- *      forgotPassword 
+ *      forgotPassword
  *      Reset Password
  */
 

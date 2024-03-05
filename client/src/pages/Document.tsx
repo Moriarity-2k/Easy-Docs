@@ -1,4 +1,4 @@
-import { FaRegStar } from "react-icons/fa";
+// import { FaRegStar } from "react-icons/fa";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import EditorMceComponent from "@/components/EditorMceComponent";
 import { Button } from "@/components/ui/button";
 import { GetBearerToken } from "@/lib/helpers";
+import ShareDocsSearchComponent from "@/components/ShareDocModal";
 
 export default function Document_Editor() {
 	// const { slug } = useParams();
@@ -69,7 +70,11 @@ export default function Document_Editor() {
 							{title}
 						</div>
 						<span>
-							<FaRegStar className="hover:cursor-pointer" />
+							{/* <FaRegStar className="hover:cursor-pointer" /> */}
+							{editorDisable.access === false &&
+								editorDisable.message === "ok" && (
+									<ShareDocsSearchComponent id={id} />
+								)}
 						</span>
 					</div>
 				</div>

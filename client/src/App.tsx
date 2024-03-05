@@ -1,5 +1,9 @@
 import { Toaster } from "react-hot-toast";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+	QueryClient,
+	QueryClientProvider,
+	// useMutation,
+} from "@tanstack/react-query";
 import Layout from "./Layout";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -13,6 +17,15 @@ import Intro from "./pages/Home";
 import Account from "./pages/Account";
 import IntroUser from "./components/IntroUser";
 import DocumentAccessRequest from "./pages/DocumentAccessRequest";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import Modal from "./components/Modal";
+// import { Input } from "./components/ui/input";
+// import { Button } from "./components/ui/button";
+// import { Label } from "./components/ui/label";
+// import { ClipSpinner } from "./components/Spinner";
+// import SearchResultsIndividual from "./components/SearchResultIndividual";
+// import SearchResultsWindow from "./components/SearchResultsWindow";
 
 const queryClient = new QueryClient();
 

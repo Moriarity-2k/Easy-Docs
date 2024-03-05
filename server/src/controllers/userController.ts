@@ -4,6 +4,7 @@ import catchAsync from "../utils/catchAsync";
 import { NextFunction, Response } from "express";
 import bcrypt from "bcryptjs";
 import document from "../models/document.model";
+import AppError from "../utils/appError";
 
 export const updateUserName = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
@@ -84,7 +85,7 @@ export const getNotifications = catchAsync(
 			if (per_user_?.active) {
 				notifications.push({
 					username: per_user_.name,
-					email: per_user_.email,
+					// email: per_user_.email,
 					id: docs.id,
 					title: docs.title,
 				});
@@ -94,6 +95,50 @@ export const getNotifications = catchAsync(
 		res.status(200).json({
 			status: "success",
 			notifications,
+		});
+	}
+);
+
+export const querySearch = catchAsync(
+	async (req: UserOnRequest, res: Response, next: NextFunction) => {
+		// console.log(req.query);
+		const { username: name_to_search, docId } = req.query;
+		if (!docId || !name_to_search) {
+			// return res.status(400).json({
+			// status : 'bad request' ,
+			// message : 'please '
+			// })
+			return next(new AppError("bad request", 400));
+		}
+
+		// TODO: search and limit the search for 5
+
+		const search_results = await user
+			.find({
+				// $or: [
+				// 	{
+				name: {
+					$regex: new RegExp(`${name_to_search}`, "i"),
+				},
+				// don't search in emails
+				// 	},
+				// ],
+				"sharedDocuments.documentId": {
+					$ne: docId,
+				},
+			})
+			.select("name -_id")
+			.limit(5);
+
+		// const userNames = x.map((user) => {
+		// 	return user.name;
+		// });
+
+		// console.log({ search_results });
+
+		res.status(200).json({
+			status: "success",
+			users: search_results,
 		});
 	}
 );
