@@ -15,7 +15,9 @@ const http_server = http.createServer(app);
 
 const io = new Server(http_server, {
 	cors: {
-		origin: "http://localhost:5173",
+		// origin: process.env.CLIENT_ORIGIN_URL,
+		origin: process.env.CLIENT_ORIGIN_DEPLOY_URL,
+		// origin: "http://localhost:5173",
 	},
 });
 
