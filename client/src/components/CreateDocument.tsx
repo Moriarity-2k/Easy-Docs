@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import Modal from "./Modal";
 import {
@@ -80,8 +80,8 @@ function CreateDocument() {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["create-document"],
 		mutationFn: onSubmit,
-		onError: (error: AxiosError) => {
-			toast.error(error?.response?.data?.message);
+		onError: () => {
+			toast.error(`Document Name already exists . Try something unique`);
 		},
 		onSuccess: (data) => {
 			toast.success("File creation successfull !!!");

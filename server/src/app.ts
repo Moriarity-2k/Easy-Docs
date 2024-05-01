@@ -73,7 +73,7 @@ app.use(
 	})
 );
 
-app.use(ExpressMongoSanitize());
+app.use(ExpressMongoSanitize());    
 // app.use(xss());
 app.use(cookieParser());
 app.use(express.json());
