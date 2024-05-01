@@ -2,7 +2,7 @@ import { config as dotEnvConfig } from "dotenv";
 dotEnvConfig({});
 
 import app from "./app";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import { Server } from "socket.io";
 import http from "http";
 
@@ -38,7 +38,6 @@ io.on("connection", (socket) => {
 		// console.log("Disconnected");
 		socket.disconnect();
 	});
-
 });
 
 const PORT = process.env.PORT || 3000;
@@ -47,12 +46,8 @@ http_server.listen(PORT, () => {
 	console.log("http server on : ", PORT);
 });
 
-const DB = process.env.DATABASE!;
-mongoose
-	.connect(DB)
-	.then(() => {
-		console.log("DB Connected ...");
-	})
-	// .catch((reason: any) => {
-	// 	console.log("DB ERROR : ", reason);
-	// });
+
+process.on("unhandledRejection", (err) => {
+    console.log("Unhandled Rejection : " , err)
+	http_server.close(() => process.emit("beforeExit", 1));
+});

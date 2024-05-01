@@ -19,10 +19,10 @@ export default function Register() {
 
 	const form = useForm<z.infer<typeof formSchemaLogin>>({
 		resolver: zodResolver(formSchemaLogin),
-		defaultValues: {
-			email: "email@gmail.com",
-			password: "pass1234",
-		},
+		// defaultValues: {
+		// 	email: "email@gmail.com",
+		// 	password: "pass1234",
+		// },
 	});
 
 	const { mutate, isPending } = useMutation({

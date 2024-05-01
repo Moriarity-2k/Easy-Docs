@@ -2,10 +2,10 @@ import { NextFunction, Response } from "express";
 import { UserOnRequest } from "../TypeHelpers/helpers";
 
 const catchAsync = (
-	fn: (req: UserOnRequest, res: Response, next: NextFunction) => void
+	fn: (req: UserOnRequest, res: Response, next: NextFunction) => any
 ) => {
 	return (req: UserOnRequest, res: Response, next: NextFunction) => {
-		fn(req, res, next);
+		fn(req, res, next).catch(next);
 	};
 };
 

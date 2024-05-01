@@ -6,13 +6,13 @@ export const base_url = `${base}api/v1/gdocs`;
 export const socket_url = `${base}`;
 
 export const REGISTER_VALUES = [
-	{ field: "username", placeholder: "enter user name" },
-	{ field: "email", placeholder: "name@email.com" },
-	{ field: "password", placeholder: "****" },
+	{ field: "username", placeholder: "Please Enter your name" },
+	{ field: "email", placeholder: "Pleae Enter your email" },
+	{ field: "password", placeholder: "" },
 ];
 export const LOGIN_VALUES = [
-	{ field: "email", placeholder: "name@email.com" },
-	{ field: "password", placeholder: "****" },
+	{ field: "email", placeholder: "Pleae Enter your email" },
+	{ field: "password", placeholder: "Password must be at least 4 characters." },
 ];
 
 export const formSchemaLogin = z.object({

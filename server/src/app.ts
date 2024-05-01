@@ -18,6 +18,7 @@ import compression from "compression";
 import AppError from "./utils/appError";
 import globalErrorHandler from "./controllers/errorController";
 import user from "./models/user.model";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -92,7 +93,17 @@ app.use("/api/v1/gdocs", documentRouter);
 // 	res.render("index");
 // });
 
-app.all("*", (req, res, next) => {
+const DB = process.env.DATABASE!;
+mongoose
+	.connect(DB)
+	.then(() => {
+		console.log("DB Connected ...");
+	})
+	.catch((reason: any) => {
+		console.log("DB ERROR : ", reason);
+	});
+
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
 	next(new AppError(`Can't find ${req.url} on this server!`, 404));
 });
 

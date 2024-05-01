@@ -19,18 +19,20 @@ export default function Register() {
 
 	const form = useForm<z.infer<typeof formSchemaRegister>>({
 		resolver: zodResolver(formSchemaRegister),
-		defaultValues: {
-			username: "username",
-			email: "email@gmail.com",
-			password: "pass1234",
-		},
+		// defaultValues: {
+		// 	username: "username",
+		// 	email: "email@gmail.com",
+		// 	password: "pass1234",
+		// },
 	});
 
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["register"],
 		mutationFn: onSubmitRegister,
-		onError: (err) => {
-			toast.error(`unable to create account. ${err.message}`);
+		onError: () => {
+			toast.error(
+				`Unable to create account. Username and Email Has to be unique`
+			);
 		},
 		onSuccess: () => {
 			toast.success("Account successfully created !!!");
@@ -52,12 +54,20 @@ export default function Register() {
 						Sign Up
 					</div>
 					{REGISTER_VALUES.map((field, i) => (
-						<FormElement
-							key={i}
-							fieldName={field.field}
-							placeHoldText={field.placeholder}
-							form={form}
-						/>
+						<>
+							<FormElement
+								key={i}
+								fieldName={field.field}
+								placeHoldText={field.placeholder}
+								form={form}
+							/>
+							{field.field === "username" && (
+								<div className="subtle-regular text-dark400_light500">
+									<span className="text-red-700 mr-2">*</span>
+									UserName has to be unique . Try suffixing .
+								</div>
+							)}
+						</>
 					))}
 
 					<Button
@@ -83,7 +93,7 @@ export default function Register() {
 						</Button>
 					</div>
 
-                    <div className="flex items-center gap-3">
+					<div className="flex items-center gap-3">
 						<div className="text-dark400_light500 small-semibold opacity-60 lowercase">
 							Back
 						</div>

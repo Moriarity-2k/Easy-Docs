@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import Modal from "./Modal";
 import {
@@ -80,10 +80,8 @@ function CreateDocument() {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ["create-document"],
 		mutationFn: onSubmit,
-		onError: () => {
-			toast.error(
-				`Failed to create the file. Please Try again Later !!!`
-			);
+		onError: (error: AxiosError) => {
+			toast.error(error?.response?.data?.message);
 		},
 		onSuccess: (data) => {
 			toast.success("File creation successfull !!!");
@@ -111,6 +109,12 @@ function CreateDocument() {
 						placeHoldText="please enter the title"
 						form={form}
 					/>
+					<div className="subtle-regular">
+						{" "}
+						<span className="text-red-700 mr-2">*</span> All the
+						Documents should have unique name . Try something
+						different like prefixing it with your username{" "}
+					</div>
 
 					<FormField
 						control={form.control}
