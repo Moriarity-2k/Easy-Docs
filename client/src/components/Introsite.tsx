@@ -18,12 +18,14 @@ export default function Introsite() {
 			<div className="md:flex md:gap-16 items-center mb-32">
 				<div className="text-dark100_light900 space-y-12 ">
 					<div className="text-dark100_light900 text-[52px] leading-snug">
-						Build your best ideas together, in Easy Docs
+						Build your best ideas together with Easy Docs
 					</div>
 					<div className="opacity-50 base-medium">
-						Create and collaborate on online documents in real-time,
+						{/* Create and collaborate on online documents in real-time,
 						enabling multiple users to contribute seamlessly from
-						any device.
+						any device. */}
+
+                        An easier way to create your documents and collab with others
 					</div>
 
 					<div className="lg:hidden text-dark100_light900">
