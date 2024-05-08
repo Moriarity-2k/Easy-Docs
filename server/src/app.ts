@@ -62,8 +62,8 @@ app.use(nocache());
 
 app.use(
 	cors({
-		origin: process.env.CLIENT_ORIGIN_URL,
-		// origin: process.env.CLIENT_ORIGIN_DEPLOY_URL,
+		// origin: process.env.CLIENT_ORIGIN_URL,
+		origin: process.env.CLIENT_ORIGIN_DEPLOY_URL,
 		// origin: '*',
 		// origin : ['*'],
 		methods: ["GET", "POST", "DELETE", "PUT"],

@@ -104,7 +104,7 @@ export default function Footer() {
 						</li>
 
 						<li>
-							<a href="#">Express Js</a>
+							<a href="#">ExpressJs</a>
 						</li>
 
 					</ul>
