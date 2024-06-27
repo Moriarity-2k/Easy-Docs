@@ -1,8 +1,9 @@
 # Easy Docs 
   check the live version here : [https://easy-docs-three.vercel.app/](https://easy-docs-three.vercel.app/)
 
-## Project Overview: Collaborative Real-Time Document Editor (MERN Stack with TypeScript and Socket IO)
-FUlly Responsibe web application inspired by Google Docs, allowing users to create, edit, and collaborate on documents in real-time with Socket IO. Built with the MERN stack (MongoDB, Express.js, React.js, Node.js) and leveraging TypeScript for type safety, it provides a user-friendly and interactive experience for collaborative document editing.
+## Project Overview: Collaborative Real-Time Document Editor (MERN Stack and Socket IO)
+
+  A fully responsive full-stack web application akin to google docs, allowing users to create, edit, and collaborate with peers in real-time .
 
 ## Tech Stack
 - Socket IO : For Real Time Document b/w multiple users .
@@ -47,18 +48,16 @@ Images :
 
 
 #### DESKTOP VIEW
-![1_E](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/cc565222-0acc-4f99-963e-bf9948e63e9e)
 
-
-
-![2_E](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/697a4102-a187-4507-a847-b597f304c993)
-
-
-
-![3_E](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/17c4940a-f37d-454a-9945-3079219c8fe7)
+![home](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/9ae46828-25fb-441f-a4a2-76294f090ca1)
+![search](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/f97e4e9a-1218-40b8-b96a-de36be02677c)
+![sign-up](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/c2eac6d2-e97a-4021-8012-656b4ab9d77f)
 
 #### MOBILE VIEW 
-![1_E_Mobile](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/a47209dd-6609-4c41-937f-29998bcbdcf2)                     ![2_E_M](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/056ff0c0-7a8e-48bf-be63-efe4a6dac38e)
+
+![MobileView-Home](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/d817162a-a7bc-483c-98c2-64ae90c97056)                      ![doc](https://github.com/Moriarity-2k/Easy-Docs/assets/143058936/d5560079-ca53-4c93-8fbe-8f77f8bf4d29)
+
+
 
 
 
