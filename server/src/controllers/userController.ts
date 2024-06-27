@@ -104,7 +104,7 @@ export const querySearch = catchAsync(
 		// console.log(req.query);
 		const { username: name_to_search, docId } = req.query;
 
-		console.log({ docId, name_to_search });
+		// console.log({ docId, name_to_search });
 
 		if (!docId || !name_to_search) {
 			// return res.status(400).json({
@@ -116,7 +116,7 @@ export const querySearch = catchAsync(
 
 		// TODO: search and limit the search for 5
 
-		console.log(req.user_);
+		// console.log(req.user_);
 
 		const search_results = await user
 			.find({

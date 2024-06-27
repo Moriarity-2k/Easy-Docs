@@ -14,7 +14,7 @@ import {
 
 import Lottie from "lottie-react";
 import Anime from "../assets/anime1.json";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { GetBearerToken } from "../../lib/helpers";
 
 interface IAdminDocs {
@@ -35,6 +35,7 @@ interface ISharedDocs {
 }
 
 export default function AllDocuments() {
+	const [searchParam] = useSearchParams();
 
 	const {
 		data: docsData,
@@ -139,13 +140,20 @@ export default function AllDocuments() {
 								}
 							)
 							.map((doc, index) => {
-								return (
-									<DocumentCard
-										key={index}
-										doc={doc}
-										name={Name(doc.title, width)}
-									/>
-								);
+								const query = searchParam.get("query");
+								const shouldDisplay =
+									query === null ||
+									CompareNames(query, doc.title);
+								if (shouldDisplay) {
+									return (
+										<DocumentCard
+											key={index}
+											doc={doc}
+											name={Name(doc.title, width)}
+										/>
+									);
+								}
+								return null;
 							})}
 					{selectFilterOwned === "shared" &&
 						docsData != null &&
@@ -162,13 +170,20 @@ export default function AllDocuments() {
 								}
 							)
 							.map((doc, index) => {
-								return (
-									<DocumentCard
-										key={index}
-										doc={doc}
-										name={Name(doc.title, width)}
-									/>
-								);
+								const query = searchParam.get("query");
+								const shouldDisplay =
+									query === null ||
+									CompareNames(query, doc.title);
+								if (shouldDisplay) {
+									return (
+										<DocumentCard
+											key={index}
+											doc={doc}
+											name={Name(doc.title, width)}
+										/>
+									);
+								}
+								return null;
 							})}
 					{selectFilterOwned === "me" &&
 						docsData != null &&
@@ -185,13 +200,20 @@ export default function AllDocuments() {
 								}
 							)
 							.map((doc, index) => {
-								return (
-									<DocumentCard
-										key={index}
-										doc={doc}
-										name={Name(doc.title, width)}
-									/>
-								);
+								const query = searchParam.get("query");
+								const shouldDisplay =
+									query === null ||
+									CompareNames(query, doc.title);
+								if (shouldDisplay) {
+									return (
+										<DocumentCard
+											key={index}
+											doc={doc}
+											name={Name(doc.title, width)}
+										/>
+									);
+								}
+								return null;
 							})}
 				</div>
 			</div>
@@ -199,11 +221,7 @@ export default function AllDocuments() {
 	);
 }
 
-export function DocumentPlaceholder({
-	showText,
-}: {
-	showText: boolean;
-}) {
+export function DocumentPlaceholder({ showText }: { showText: boolean }) {
 	return (
 		<div className=" mt-8">
 			<Lottie
@@ -221,6 +239,22 @@ export function DocumentPlaceholder({
 			)}
 		</div>
 	);
+}
+
+export function CompareNames(cmp: string, name: string) {
+	cmp = cmp.toLowerCase().split(" ").join("");
+	name = name.toLowerCase().split(" ").join("");
+	let i = 0,
+		j = 0;
+	for (; i < name.length && j < cmp.length; ) {
+		if (name[i] === cmp[j]) {
+			i++;
+			j++;
+		} else {
+			i++;
+		}
+	}
+	return j === cmp.length;
 }
 
 export function Name(name: string, width: number): string {

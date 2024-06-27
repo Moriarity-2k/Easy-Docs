@@ -33,8 +33,6 @@ router.route("/user/search").get(async (req, res, next) => {
 
 	const val = await user.find({ name }).select("name");
 
-	console.log("USER : ", val);
-
 	if (val.length) {
 		return res.status(200).json({
 			message: "Document name already exists",

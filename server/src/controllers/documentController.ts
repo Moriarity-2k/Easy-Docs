@@ -51,9 +51,6 @@ export const getAllDocuments = catchAsync(
 				});
 		}
 
-		console.log({ adminDocs });
-		console.log({ sharedDocs });
-
 		res.status(200).json({
 			status: "success",
 			docs: {
@@ -78,7 +75,7 @@ export const getDocument = catchAsync(
 			});
 		}
 
-		console.log({ doc });
+		// console.log({ doc });
 
 		res.status(200).json({
 			status: "success",

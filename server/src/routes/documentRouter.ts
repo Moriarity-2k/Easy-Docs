@@ -29,8 +29,6 @@ router.route("/document/search").get(async (req, res, next) => {
 
 	const val = await document.find({ title });
 
-	console.log("DOC NAME : ", val);
-
 	if (val.length) {
 		return res.status(200).json({
 			message: "Document name already exists",

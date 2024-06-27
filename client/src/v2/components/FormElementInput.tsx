@@ -105,7 +105,6 @@ export default function FormElementInput({
 									value={name}
 									onChangeCapture={(e) => {
 										setName(e.currentTarget.value);
-										console.log(e.currentTarget.value);
 									}}
 									type={type ? type : "text"}
 								/>

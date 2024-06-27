@@ -99,8 +99,6 @@ export default (
 	let error = { ...err };
 	error.message = err.message;
 
-	console.log({ error });
-
 	if (error.name === "CastError") error = handleCastErrorDB(error);
 	if (error.code === 11000) error = handleDuplicateFieldsDB(error);
 	if (error.name === "ValidationError")

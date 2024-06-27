@@ -9,7 +9,7 @@ import { GoPlus } from "react-icons/go";
 import AllDocuments from "../components/Documents/AllDocuments";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CreateDocument } from "../components/Documents/CreateDocument";
 
 export default function Documents() {
@@ -141,10 +141,27 @@ function SvgSearch() {
 }
 
 function DocumentSearchInput() {
+	const [query, setQuery] = useState("");
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if (query.trim()) {
+				navigate(`/?query=${encodeURIComponent(query)}`);
+			} else {
+				navigate("/");
+			}
+		}, 400);
+
+		return () => clearTimeout(timer);
+	}, [query, navigate]);
+
 	return (
 		<div className="bg-[#f0f4f9] mx-5 md:mx-20 px-4 py-2 flex items-center gap-2">
 			<SvgSearch />
 			<Input
+				value={query}
+				onChange={(e) => setQuery(e.target.value)}
 				className="bg-inherit inset-0 outline-none border-none active:inset-0 active:border-none active:outline-none ring-0 active:ring-0 rounded-md w-full"
 				placeholder="Search"
 			/>

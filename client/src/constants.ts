@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const base = "https://easydocs-server.onrender.com/";
+const base = import.meta.env.VITE_BACKEND_URL
 // const base = "http://localhost:3000/";
 export const base_url = `${base}api/v1/gdocs`;
 export const socket_url = `${base}`;
