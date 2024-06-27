@@ -1,93 +1,104 @@
 import { Toaster } from "react-hot-toast";
-import {
-	QueryClient,
-	QueryClientProvider,
-	// useMutation,
-} from "@tanstack/react-query";
-import Layout from "./Layout";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import { ThemeProvider } from "./context/useTheme";
-import Home from "./pages/Layout_Page";
-import Document_Editor from "./pages/Document";
+
+/**
+ * Page Imports
+ */
+import Layout from "./Layout";
+import LayoutHome from "./v2/pages/LayoutHome";
+import Register from "./v2/pages/Register";
+import Login from "./v2/pages/Login";
+import Documents from "./v2/pages/Documents";
+import DocumentAccessCheck from "./v2/pages/DocumentAccessCheck";
+import Account from "./v2/pages/Account";
+import Notifications from "./v2/components/Account/Notifications";
+import UserNameUpdate from "./v2/components/Account/UserNameUpdate";
+import PasswordUpdateForm from "./v2/components/Account/PasswordUpdateForm";
 import AuthProvider from "./context/useAuth";
-import Intro from "./pages/Home";
-import Account from "./pages/Account";
-import IntroUser from "./components/IntroUser";
-import DocumentAccessRequest from "./pages/DocumentAccessRequest";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import Modal from "./components/Modal";
-// import { Input } from "./components/ui/input";
-// import { Button } from "./components/ui/button";
-// import { Label } from "./components/ui/label";
-// import { ClipSpinner } from "./components/Spinner";
-// import SearchResultsIndividual from "./components/SearchResultIndividual";
-// import SearchResultsWindow from "./components/SearchResultsWindow";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Home />,
+		element: <LayoutHome />,
 		children: [
 			{
 				path: "/",
-				element: <Intro />,
+				element: <Documents />,
 			},
 			{
-				path: "/all-documents",
-				element: <IntroUser />,
+				path: "/register",
+				element: <Register />,
 			},
 			{
-				path: "/notifications",
-				element: <DocumentAccessRequest />,
-			},
-			{
-				path: "/my-account",
-				element: <Account />,
+				path: "/login",
+				element: <Login />,
 			},
 			{
 				path: "/document/:slug",
-				element: <Document_Editor />,
+				// element: <TinyEditor />,
+				element: <DocumentAccessCheck />,
+			},
+			{
+				path: "account",
+				element: <Account />,
+				children: [
+					{
+						path: "details",
+						element: (
+							<>
+								<UserNameUpdate />
+								<PasswordUpdateForm />
+							</>
+						),
+					},
+					{
+						path: "notifications",
+						element: <Notifications />,
+					},
+				],
 			},
 		],
-	},
-	{
-		path: "/register",
-		element: <Register />,
-	},
-	{
-		path: "/login",
-		element: <Login />,
 	},
 ]);
 
 function App() {
 	return (
-		<QueryClientProvider client={queryClient}>
-			<AuthProvider>
-				<ThemeProvider>
+		<>
+			<QueryClientProvider client={queryClient}>
+				<AuthProvider>
 					<Layout>
 						<RouterProvider router={router} />
 					</Layout>
-				</ThemeProvider>
-			</AuthProvider>
-			<Toaster
-				toastOptions={{
-					success: {
-						iconTheme: { primary: "#3530d1", secondary: "#fff" },
-					},
-					error: {
-						iconTheme: { primary: "#D24545", secondary: "#fff" },
-					},
-				}}
-			/>
-		</QueryClientProvider>
+				</AuthProvider>
+				<Toaster
+					toastOptions={{
+						success: {
+							iconTheme: {
+								primary: "#3530d1",
+								secondary: "#fff",
+							},
+						},
+						error: {
+							iconTheme: {
+								primary: "#D24545",
+								secondary: "#fff",
+							},
+						},
+					}}
+				/>
+			</QueryClientProvider>
+		</>
 	);
 }
-
 export default App;
+
+/**
+ * TODO:
+ *
+ * Share -> anyone with the link
+ * Save button
+ * Download button
+ */

@@ -1,3 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap");
+
+.josefin-slab-bold {
+	font-family: "Josefin Slab", serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: normal;
+}
+
+.exp_gradient {
+	background: #0575e6; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		#021b79,
+		#0575e6
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#021b79,
+		#0575e6
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.animate-width {
+	animation: border-bottom-animation 1s linear;
+}
+
+@keyframes border-bottom-animation {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+tbody > tr {
+	cursor: pointer;
+}
+
+td {
+	font-size: 16px;
+	font-weight: lighter;
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+	margin-left: 6px;
+	margin-top: 1rem;
+	opacity: 0.8;
+	padding: 8px 0;
+}
+
+.border-bottom-animate {
+	position: relative;
+	display: inline-block;
+}
+
+.border-bottom-animate::after {
+	content: "";
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px; /* Adjust the height of the border as needed */
+	background-color: rgb(22, 163, 74); /* Same green color */
+	animation: border-bottom-animation 1s forwards; /* 1s is the duration */
+}
+
+.border-bottom-animate-error {
+	position: relative;
+	display: inline-block;
+}
+
+.border-bottom-animate-error::after {
+	content: "";
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px; /* Adjust the height of the border as needed */
+	background-color: rgb(163, 50, 22); /* Same green color */
+	animation: border-bottom-animation 1s forwards; /* 1s is the duration */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -111,10 +195,10 @@
 }
 
 .madimi-one-regular {
-    font-family: "Madimi One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+	font-family: "Madimi One", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
 
 @layer utilities {
 	.background-light850_dark100 {

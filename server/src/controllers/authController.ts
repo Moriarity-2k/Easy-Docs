@@ -35,7 +35,7 @@ export const Login = catchAsync(
 		if (!user_accept) {
 			return res.status(401).json({
 				status: "error",
-				message: "Either email or password is wrong ! Try again",
+				message: "You have entered an invalid username or password",
 			});
 		}
 

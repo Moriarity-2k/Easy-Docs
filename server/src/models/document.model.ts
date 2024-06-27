@@ -11,6 +11,7 @@ export interface IDocument extends Document {
 	slug: string;
 	adminId: Schema.Types.ObjectId;
 	createdOn: Date;
+	active: boolean;
 }
 
 const documentSchema = new Schema<IDocument>(
@@ -27,6 +28,10 @@ const documentSchema = new Schema<IDocument>(
 		createdOn: {
 			type: Date,
 			default: Date.now(),
+		},
+		active: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	{

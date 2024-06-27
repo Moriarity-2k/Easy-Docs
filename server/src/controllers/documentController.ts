@@ -31,24 +31,28 @@ export const createDocument = catchAsync(
 export const getAllDocuments = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
 		const docs = await document
-			.find({ adminId: req.user_?._id })
-			.select("title createdOn slug")
-			.sort({ createdOn: "desc" });
+			.find({ adminId: req.user_?._id, active: true })
+			// .select("title createdOn slug")
+			.select("-__v -adminId -content");
+		// .sort({ createdOn: "desc" });
 
 		const adminDocs = [...docs];
 		const sharedDocs = [];
 
 		for (const x of req.user_?.sharedDocuments!) {
 			const doc = (await document.findById(x.documentId)) as IDocument;
-
 			if (doc)
 				sharedDocs.push({
-					id: doc._id,
+					id: doc.id,
 					title: doc.title,
 					createdOn: doc.createdOn,
 					slug: doc.slug,
+					shared: true,
 				});
 		}
+
+		console.log({ adminDocs });
+		console.log({ sharedDocs });
 
 		res.status(200).json({
 			status: "success",
@@ -62,7 +66,10 @@ export const getAllDocuments = catchAsync(
 
 export const getDocument = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
-		const doc = await document.findById(req.params.id);
+		const doc = await document.findOne({
+			_id: req.params.id,
+			active: true,
+		});
 
 		if (!doc) {
 			return res.status(404).json({
@@ -70,6 +77,8 @@ export const getDocument = catchAsync(
 				message: "sorry , the document doesn't exist",
 			});
 		}
+
+		console.log({ doc });
 
 		res.status(200).json({
 			status: "success",
@@ -121,9 +130,13 @@ export const getAccess = catchAsync(
 
 export const updateDocument = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
-		const new_doc = await document.findByIdAndUpdate(req.params.id, {
-			content: req.body.content,
-		});
+		const update = req.body;
+
+		await document.findByIdAndUpdate(req.params.id, update, { new: true });
+
+		// const new_doc = await document.findByIdAndUpdate(req.params.id, {
+		// 	content: req.body.content,
+		// });
 		res.status(200).json({
 			status: "success",
 			message: "data received",
@@ -152,13 +165,15 @@ export const deleteDocument = catchAsync(
 			});
 		}
 
-		if (doc.adminId !== userId) {
+		// TODO: not your document to delete
+		if (String(doc.adminId) !== String(userId)) {
 			return res.status(401).json({
 				status: "success",
 				message: "Document deleted successfully",
 			});
 		}
 
+		// TODO: Do not delete but update the doc to !active
 		await document.findByIdAndDelete(docId);
 		res.status(204).json({
 			status: "success",
@@ -238,6 +253,7 @@ export const grantPermission = catchAsync(
 
 		const req_user_ = await user.findOne({ name })!;
 
+		// here taking out the ask permission req , cause we're granting it
 		req.user_!.AccessPermission = req.user_!.AccessPermission.filter(
 			(eachPerm) => {
 				// console.log(

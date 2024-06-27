@@ -103,6 +103,9 @@ export const querySearch = catchAsync(
 	async (req: UserOnRequest, res: Response, next: NextFunction) => {
 		// console.log(req.query);
 		const { username: name_to_search, docId } = req.query;
+
+		console.log({ docId, name_to_search });
+
 		if (!docId || !name_to_search) {
 			// return res.status(400).json({
 			// status : 'bad request' ,
@@ -113,10 +116,13 @@ export const querySearch = catchAsync(
 
 		// TODO: search and limit the search for 5
 
+		console.log(req.user_);
+
 		const search_results = await user
 			.find({
-				// $or: [
-				// 	{
+				_id: {
+					$ne: req.user_?._id,
+				},
 				name: {
 					$regex: new RegExp(`${name_to_search}`, "i"),
 				},

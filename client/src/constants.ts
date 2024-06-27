@@ -1,18 +1,31 @@
 import { z } from "zod";
 
 const base = "https://easydocs-server.onrender.com/";
-// const base = "http://localhost:3000/" 
+// const base = "http://localhost:3000/";
 export const base_url = `${base}api/v1/gdocs`;
 export const socket_url = `${base}`;
 
 export const REGISTER_VALUES = [
-	{ field: "username", placeholder: "Please Enter your name" },
-	{ field: "email", placeholder: "Pleae Enter your email" },
-	{ field: "password", placeholder: "" },
+	{
+		field: "username",
+		placeholder: "Please Enter your name",
+		type: "text",
+		route: `${base_url}/user/search?name=`,
+	},
+	{ field: "email", placeholder: "Pleae Enter your email", type: "email" },
+	{
+		field: "password",
+		placeholder: "Please Enter you password",
+		type: "password",
+	},
 ];
 export const LOGIN_VALUES = [
-	{ field: "email", placeholder: "Pleae Enter your email" },
-	{ field: "password", placeholder: "Password must be at least 4 characters." },
+	{ field: "email", placeholder: "Pleae Enter your email", type: "email" },
+	{
+		field: "password",
+		placeholder: "Please Enter you password",
+		type: "password",
+	},
 ];
 
 export const formSchemaLogin = z.object({
@@ -33,13 +46,14 @@ export const formSchemaRegister = z.object({
 });
 
 export interface ILoggedUser {
-	name: string;
-	email: string;
+	name?: string;
+	email?: string;
 }
 
 export interface IEditorDisable {
 	access: boolean;
 	message: string;
+	isAdmin: boolean;
 }
 
 export const CATEGORIES = [
@@ -69,3 +83,12 @@ export const formSchemaUpdatePassword = z.object({
 		.string()
 		.min(4, { message: "Password must be at least 4 characters." }),
 });
+
+export function formatDate(timestamp: string): string {
+	const date = new Date(timestamp);
+	const day = String(date.getDate()).padStart(2, "0");
+	const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+	const year = date.getFullYear();
+
+	return `${day} ${month} ${year}`;
+}

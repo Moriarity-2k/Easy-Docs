@@ -6,7 +6,8 @@ import {
 	formSchemaUpdatePassword,
 	formSchemaUpdateUserName,
 } from "@/constants";
-import { GetBearerToken, SetBearerToken } from "@/lib/helpers";
+import { GetBearerToken, SetBearerToken } from "@/v2/lib/helpers";
+// import { GetBearerToken, SetBearerToken } from "@/lib/helpers";
 import axios from "axios";
 import {
 	ReactNode,
@@ -27,14 +28,16 @@ export interface IAuthContext {
 	onSubmitPasswordChange: (
 		values: z.infer<typeof formSchemaUpdatePassword>
 	) => any;
-	loggedInUser: ILoggedUser | any;
+	loggedInUser: ILoggedUser | null;
 	Logout: () => void;
+	loading: boolean;
 }
 
 const AuthContext = createContext<IAuthContext | null>(null);
 
 function AuthProvider({ children }: { children: ReactNode }) {
 	const [loggedInUser, setLoggedInUser] = useState<ILoggedUser | any>({});
+	const [loading, setLoading] = useState<boolean>(true);
 
 	async function Logout() {
 		try {
@@ -103,6 +106,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 	}
 
 	async function onSubmitLogin(values: z.infer<typeof formSchemaLogin>) {
+		console.log({ values });
 		const logInUser = await axios(`${base_url}/login`, {
 			method: "POST",
 			withCredentials: true,
@@ -118,8 +122,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			"user-details",
 			JSON.stringify(logInUser.data.user)
 		);
+
+		console.log({ logInUser });
+
 		setLoggedInUser(logInUser.data.user);
 		SetBearerToken(logInUser.data.token);
+
 		return logInUser;
 	}
 
@@ -153,11 +161,13 @@ function AuthProvider({ children }: { children: ReactNode }) {
 			const parsed_user = JSON.parse(user_localstorage);
 			setLoggedInUser(parsed_user);
 		}
+		setLoading(false);
 	}, []);
 
 	return (
 		<AuthContext.Provider
 			value={{
+				loading,
 				onSubmitLogin,
 				onSubmitRegister,
 				loggedInUser,

@@ -11,6 +11,7 @@ import {
 	updatePassword,
 	updateUserName,
 } from "../controllers/userController";
+import user from "../models/user.model";
 
 const router = Router();
 
@@ -25,6 +26,27 @@ router.route("/user/updatePassword").post(authenticate, updatePassword);
 router.route("/user/querysearch").get(authenticate, querySearch);
 
 router.route("/user/notifications").get(authenticate, getNotifications);
+
+router.route("/user/search").get(async (req, res, next) => {
+	const { name } = req.query;
+	// console.log({ name });;
+
+	const val = await user.find({ name }).select("name");
+
+	console.log("USER : ", val);
+
+	if (val.length) {
+		return res.status(200).json({
+			message: "Document name already exists",
+			ok: 0,
+		});
+	}
+
+	return res.status(200).json({
+		message: "success",
+		ok: 1,
+	});
+});
 
 /**
  *
